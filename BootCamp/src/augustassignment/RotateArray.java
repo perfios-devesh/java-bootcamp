@@ -22,16 +22,17 @@ public class RotateArray {
 		System.out.println("Enter number of rotations.");
 		int rotations  = sc.nextInt();
 		
-		System.out.println("Original Array: ");
+		System.out.print("Original Array:  ");
 		for(int i = 0; i<n; i++)
 		{
 			System.out.print(arr[i] + " ");
 		}
+		System.out.println();
 		
 		rotate(arr, rotations, n);
 		
 		//printing rotated array
-		System.out.println("Rotated Array: ");
+		System.out.print("Rotated Array:  ");
 		for(int i = 0; i<n; i++)
 		{
 			System.out.print(arr[i] + " ");

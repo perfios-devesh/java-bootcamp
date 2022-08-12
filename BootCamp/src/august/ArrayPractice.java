@@ -83,5 +83,7 @@ public class ArrayPractice{
 			data[4] = stdnew;
 			System.out.println("Successfully Registered " + data[4].getName() + " having mail id: " + data[4].getEmailId() + " living in " + data[4].getCity());
 		}
+		
+		sc.close();
 	}
 }
