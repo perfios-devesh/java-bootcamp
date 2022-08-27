@@ -1,0 +1,44 @@
+
+g
+java:S1192D"LDefine a constant instead of duplicating this literal "All-Rounder" 3 times.(¢ïˆ¹şÿÿÿÿ
+d
+java:S1192="IDefine a constant instead of duplicating this literal "Batsman" 12 times.(²€âäûÿÿÿÿ
+d
+java:S1192@"NDefine a constant instead of duplicating this literal "Wicket-Keeper" 8 times.(ƒ§üÒ
+]
+java:S11929"HDefine a constant instead of duplicating this literal "Bowler" 15 times.(·»¥E
+[
+java:S21841"@Cast one of the operands of this integer division to a "double".(»ßğíüÿÿÿÿ
+\
+java:S2184„"@Cast one of the operands of this integer division to a "double".(»ßğíüÿÿÿÿ
+N	java:S106"9Replace this use of System.out or System.err by a logger.(ÆşÏ´
+N	java:S106"9Replace this use of System.out or System.err by a logger.(Õ—÷ı
+S	java:S106"9Replace this use of System.out or System.err by a logger.(…¬óşÿÿÿÿ
+\
+java:S1612"FReplace this lambda with method reference 'this::displaySinglePlayer'.(È×ûü
+N	java:S106""9Replace this use of System.out or System.err by a logger.(ô´‚
+N	java:S106("9Replace this use of System.out or System.err by a logger.(Ä·ûö
+S	java:S106+"9Replace this use of System.out or System.err by a logger.(ºÄ¿üşÿÿÿÿ
+S	java:S106-"9Replace this use of System.out or System.err by a logger.(´Ëªüÿÿÿÿ
+N	java:S106/"9Replace this use of System.out or System.err by a logger.(™Ò£É
+N	java:S1062"9Replace this use of System.out or System.err by a logger.(š’çÙ
+S	java:S1064"9Replace this use of System.out or System.err by a logger.(ÚâİŠúÿÿÿÿ
+N	java:S1066"9Replace this use of System.out or System.err by a logger.(œ©Í×
+S	java:S106G"9Replace this use of System.out or System.err by a logger.(ªÚÅ¡ÿÿÿÿÿ
+W
+java:S1126O"AReplace this if-then-else statement by a single return statement.(ĞĞ‚¾
+T	java:S106‹"9Replace this use of System.out or System.err by a logger.(öÔûšÿÿÿÿÿ
+O	java:S106—"9Replace this use of System.out or System.err by a logger.( íëŠ
+T	java:S106š"9Replace this use of System.out or System.err by a logger.(ÉÎÖ·øÿÿÿÿ
+O	java:S106œ"9Replace this use of System.out or System.err by a logger.(¾ş÷Â
+T	java:S106"9Replace this use of System.out or System.err by a logger.(éä—¢ûÿÿÿÿ
+T	java:S106 "9Replace this use of System.out or System.err by a logger.(ıÌ‚óøÿÿÿÿ
+T	java:S106¢"9Replace this use of System.out or System.err by a logger.(Ÿ‹Ÿşÿÿÿÿ
+O	java:S106¤"9Replace this use of System.out or System.err by a logger.(ŒŒ¥†
+T	java:S106³"9Replace this use of System.out or System.err by a logger.(ªÚÅ¡ÿÿÿÿÿ
+n
+java:S3776»"RRefactor this method to reduce its Cognitive Complexity from 30 to the 15 allowed.(ïÖÿÿÿÿÿ
+T	java:S106ë"9Replace this use of System.out or System.err by a logger.(ÖÃ§¸ÿÿÿÿÿ
+T	java:S106ì"9Replace this use of System.out or System.err by a logger.(…¬óşÿÿÿÿ
+]
+java:S1612í"FReplace this lambda with method reference 'this::displaySinglePlayer'.(‘Ü‡Æ

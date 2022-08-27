@@ -34,7 +34,7 @@ public class TeamMaker {
         System.out.println("Enter 20 players information ensuring at least 3 bowlers and 1 wicketkeeper.");
         int numberOfBowlers = 0;
         int numberOfWicketkeeper = 0;
-        for(int i =0 ; i < 2; i++)
+        for(int i =0 ; i < 20; i++)
         {
             Player player = new Player();
             System.out.println("Enter player jersey number.");
