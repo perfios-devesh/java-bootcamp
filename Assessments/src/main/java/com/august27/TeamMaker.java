@@ -92,7 +92,7 @@ public class TeamMaker {
         Player player7 = new Player(19,"Mayank Agarwal","Batsman",0.0,29500,400,25,32);
         Player player8 = new Player(8,"Shreyas Iyer","Batsman",0.0,91500,400,25,32);
         Player player9 = new Player(9,"Yuzvendra Chahal","Bowler",0.0,85500,400,25,32);
-        Player player10 = new Player(10,"KL Rahul","Wicket-Keeper",0.0,75500,400,25,32);
+        Player player10 = new Player(10,"KL Rahul","Wicket-Keeper",0.0,5500,400,25,32);
         Player player11 = new Player(11,"Hardik Pandya","Batsman",0.0,92500,400,25,32);
         Player player12 = new Player(12,"Kuldeep Yadav","Bowler",0.0,16500,400,25,32);
         Player player13 = new Player(13,"Shardul Thakur","Bowler",0.0,7500,400,25,32);
