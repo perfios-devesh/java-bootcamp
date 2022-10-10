@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Perfios Bank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <style>
+      .col-5 {
+        margin-bottom: 15px;
+        text-align: left;
+      }
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      td,
+      th {
+        text-align: left;
+      }
+    </style>
+  </head>
+
+  <body style="background-color: black; color: white">
+    <div style="width: 80%; margin: auto; margin-top: 10px">
+      <div id="nav-placeholder"></div>
+
+      <div style="text-align: center; width: 100%" id="main">
+        <div class="container">
+          <div class="row mt-5">
+            <div class="col-md-12">
+              <form
+                onsubmit="displayTableFunction();return false;"
+                id="formDiv"
+                style="display: block"
+              >
+                <h2>View Account Statement</h2>
+                <br />
+                <div class="row justify-content-center align-bottom">
+                  <div class="col-5">
+                    <label for="accountNumber" class="form-label"
+                      >Account Number</label
+                    >
+                    <select
+                      required="required"
+                      class="form-control"
+                      id="accountNumber"
+                      placeholder="Account Number"
+                    >
+                      <option selected disabled value="">Account Number</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <button class="btn btn-primary" style="margin-top: 10%">
+                      View Statement
+                    </button>
+                  </div>
+                </div>
+              </form>
+              <div class="row mt-5">
+                <div
+                  class="col-md-12"
+                  id="tableContainer"
+                  style="display: none"
+                >
+                  <table
+                    id="transactionTable"
+                    class="table border-dark text-center"
+                    style="color: white"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Transaction id</th>
+                        <th>Date</th>
+                        <th>Message</th>
+                        <th>Credit</th>
+                        <th>Debit</th>
+                        <th>Balance</th>
+                      </tr>
+                    </thead>
+                    <tbody id="inject"></tbody>
+                  </table>
+                </div>
+              </div>
+              <div
+                id="downloadButton"
+                class="row justify-content-center"
+                style="display: none"
+              >
+                <br />
+                <button
+                  class="btn btn-primary"
+                  style="width: 100%"
+                  onclick="exportData();"
+                >
+                  Download Statement
+                </button>
+              </div>
+              <div id="noTransactions" style="display: none">
+                <p>There are no transactions for this account.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var clientId;
+      var clientName;
+      var iter = 0;
+      var accountNumber = 0;
+      var displayBalance = 0;
+      $(function () {
+        $("#nav-placeholder").load("nav.html");
+        clientId = sessionStorage.getItem("clientId");
+        clientName = sessionStorage.getItem("name");
+        getAllAccountsApiCall();
+      });
+
+      async function getAllAccountsApiCall() {
+        let data = {
+          clientId: clientId,
+        };
+
+        console.log(data);
+
+        let response = await fetch(
+          "http://localhost:5550/banking/account?clientId=" + clientId,
+          {
+            method: "GET",
+          }
+        );
+
+        let resp = await response.json();
+        console.log(resp);
+        accountDetailsDTOS = resp.accountDetailsDTOS;
+        console.log(accountDetailsDTOS);
+
+        accountDetailsDTOS.forEach(createOptions);
+
+        setNavBarValues();
+      }
+
+      function setNavBarValues() {
+        document.getElementById("navbarDropdownMenuLink").innerHTML =
+          clientName;
+        document.getElementById("clientNavBar").style.display = "flex";
+        document.getElementById("commonNavBar").style.display = "flex";
+      }
+
+      function createOptions(item) {
+        var accountNumber = item.accountNumber;
+        var accountType = item.type;
+        var branch = item.branchName;
+        var balance = item.balance;
+
+        var select = document.getElementById("accountNumber");
+
+        var opt = document.createElement("option");
+        opt.setAttribute("value", accountNumber);
+        opt.innerHTML = accountNumber + " ( " + branch + " )";
+
+        select.appendChild(opt);
+      }
+
+      function displayTableFunction() {
+        allTransactionsApiCall();
+      }
+
+      async function allTransactionsApiCall() {
+        accountNumber = document.getElementById("accountNumber").value;
+        let data = {
+          accountNumber: accountNumber,
+        };
+        console.log(data);
+
+        let response = await fetch(
+          "http://localhost:5550/banking/transaction/all",
+          {
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+            body: JSON.stringify(data),
+          }
+        );
+
+        let resp = await response.json();
+        console.log(resp);
+
+        document.getElementById("inject").innerHTML = "";
+        if (resp.apiStatusSuccessful == true) {
+          var transactionResponseDTOS = resp.transactionResponseDTOS;
+          console.log(transactionResponseDTOS);
+
+          if (transactionResponseDTOS.length == 0) {
+            document.getElementById("noTransactions").style.display = "block";
+          } else {
+            document.getElementById("noTransactions").style.display = "none";
+
+            displayBalance = resp.balance;
+            console.log(resp.balance);
+            document.getElementById("tableContainer").style =
+              "display: ''; overflow-y: scroll; height:80%;";
+
+            transactionResponseDTOS.forEach(createTable);
+
+            document.getElementById("downloadButton").style.display =
+              "inline-block";
+          }
+        }
+      }
+
+      function createTable(item) {
+        var transactionId = item.transactionId;
+        var transactionType = item.transactionType;
+
+        var date1 = new Date(item.date);
+        const nlBEFormatter = new Intl.DateTimeFormat("nl-BE");
+        var date = nlBEFormatter.format(date1);
+        // var date = date1.toLocaleString();
+        var creditAccountNumber = item.creditAccountNumber;
+        var debitAccountNumber = item.debitAccountNumber;
+        var amount = item.amount;
+        var creditClientName = item.creditClientName;
+        var debitClientName = item.debitClientName;
+
+        addMore(
+          transactionId,
+          transactionType,
+          date,
+          creditAccountNumber,
+          debitAccountNumber,
+          amount,
+          creditClientName,
+          debitClientName
+        );
+      }
+
+      var lastAmount = 0;
+      var wasCredit = 0;
+      var wasDebit = 0;
+
+      function addMore(
+        transactionId,
+        transactionType,
+        date,
+        creditAccountNumber,
+        debitAccountNumber,
+        amount,
+        creditClientName,
+        debitClientName
+      ) {
+        var table = document.getElementById("inject");
+        var tableRow = document.createElement("tr");
+
+        var td1 = document.createElement("td");
+        td1.innerHTML = transactionId;
+
+        var td2 = document.createElement("td");
+        td2.innerHTML = date;
+
+        var td3 = document.createElement("td"); //message
+        var td4 = document.createElement("td"); //credit
+        var td5 = document.createElement("td"); //debit
+        var td6 = document.createElement("td"); //balance
+
+        if (wasCredit) {
+          if (iter != 0) {
+            displayBalance = displayBalance - lastAmount;
+          }
+        }
+        if (wasDebit == 1) {
+          if (iter != 0) {
+            displayBalance = displayBalance + lastAmount;
+          }
+        }
+
+        lastAmount = amount;
+        console.log(displayBalance);
+        if (creditAccountNumber == accountNumber) {
+          wasCredit = 1;
+          wasDebit = 0;
+          tableRow.style.color = "green";
+          if (debitAccountNumber != 3) {
+            td3.innerHTML =
+              transactionType +
+              " transfer from account: " +
+              debitAccountNumber +
+              " (" +
+              debitClientName +
+              ")";
+          } else {
+            td3.innerHTML = transactionType;
+          }
+          td4.innerHTML = amount;
+          td5.innerHTML = "";
+          td6.innerHTML = displayBalance;
+        } else {
+          wasCredit = 0;
+          wasDebit = 1;
+          tableRow.style.color = "red";
+
+          if (creditAccountNumber != 3) {
+            td3.innerHTML =
+              transactionType +
+              " transfer to account: " +
+              creditAccountNumber +
+              " (" +
+              creditClientName +
+              ")";
+          } else {
+            td3.innerHTML = transactionType;
+          }
+          td4.innerHTML = "";
+          td5.innerHTML = amount;
+          td6.innerHTML = displayBalance;
+        }
+
+        tableRow.append(td1, td2, td3, td4, td5, td6);
+        table.appendChild(tableRow);
+        iter++;
+      }
+
+      function exportData() {
+        var table = document.getElementById("transactionTable");
+
+        var rows = [];
+
+        for (var i = 0, row; (row = table.rows[i]); i++) {
+          //rows would be accessed using the "row" variable assigned in the for loop
+          //Get each cell value/column from the row
+          column1 = row.cells[0].innerText;
+          column2 = row.cells[1].innerText;
+          column3 = row.cells[2].innerText;
+          column4 = row.cells[3].innerText;
+          column5 = row.cells[4].innerText;
+          column6 = row.cells[5].innerText;
+
+          /* add a new records in the array */
+          rows.push([column1, column2, column3, column4, column5, column6]);
+        }
+        csvContent = "data:text/csv;charset=utf-8,";
+        /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
+        rows.forEach(function (rowArray) {
+          row = rowArray.join(",");
+          csvContent += row + "\r\n";
+        });
+
+        /* create a hidden <a> DOM node and set its download attribute */
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "Transactions_" + accountNumber + ".csv");
+        document.body.appendChild(link);
+        /* download the data file named "Stock_Price_Report.csv" */
+        link.click();
+      }
+    </script>
+  </body>
+</html>

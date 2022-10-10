@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Perfios Bank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  </head>
+
+  <body style="background-color: black; color: white">
+    <div style="width: 80%; margin: auto; margin-top: 10px">
+      <div id="nav-placeholder"></div>
+
+      <div style="text-align: center; width: 100%" id="main">
+        <div
+          style="
+            height: 550px;
+            width: 34%;
+            float: left;
+            text-align: left;
+            padding: 10px;
+            margin-top: 10px;
+          "
+        >
+          <div style="margin-top: 100px">
+            <h2>Personal Banking Sign In</h2>
+            <h5 id="loginMessage" style="display: none; color: red"></h5>
+            <form>
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username"
+                  placeholder="Username"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" />
+              </div>
+              <div style="text-align: center">
+                <button
+                  onclick="loginApiCall();return false;"
+                  class="btn btn-primary"
+                >
+                  Sign in
+                </button>
+              </div>
+
+              <div>
+                <a
+                  href="register.html"
+                  style="float: left; color: white; text-decoration: underline"
+                  >Register</a
+                >
+                <a
+                  href="forgotPassword.html"
+                  style="float: right; color: white; text-decoration: underline"
+                  >Forgot Password</a
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div
+          id="carouselExampleInterval"
+          class="carousel carousel-dark slide"
+          data-bs-ride="carousel"
+          style="height: 550px; width: 65%; float: right"
+        >
+          <div class="carousel-inner" style="height: 550px; margin-top: 10px">
+            <div class="carousel-item active" data-bs-interval="2000">
+              <img
+                src="resources/carousel_first.jpg"
+                style="height: 550px"
+                class="d-block w-100"
+                alt="First"
+              />
+            </div>
+            <div class="carousel-item" data-bs-interval="2000">
+              <img
+                src="resources/carousel_second.jpg"
+                style="height: 550px"
+                class="d-block w-100"
+                alt="Second"
+              />
+            </div>
+            <div class="carousel-item" data-bs-interval="2000">
+              <img
+                src="resources/carousel_third.jpg"
+                style="height: 550px"
+                class="d-block w-100"
+                alt="Third"
+              />
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleInterval"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleInterval"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var username;
+      var password;
+      $(function () {
+        $("#nav-placeholder").load("nav.html");
+      });
+
+      async function loginApiCall() {
+        username = document.getElementById("username").value;
+        password = document.getElementById("password").value;
+        let data = {
+          username: username,
+          password: password,
+        };
+        console.log(data);
+
+        let response = await fetch("http://localhost:5550/banking/login", {
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+
+        let resp = await response.json();
+
+        if (resp.apiStatusSuccessful == true) {
+          var id = resp.id;
+          var name = resp.fullName;
+          var role = resp.role;
+          var level = resp.level;
+          console.log(id);
+
+          if (level == 0) {
+            sessionStorage.setItem("clientId", id);
+          } else {
+            sessionStorage.setItem("userId", id);
+          }
+          sessionStorage.setItem("name", name);
+          sessionStorage.setItem("role", role);
+          sessionStorage.setItem("level", level);
+          if (resp.apiStatusSuccessful == true) {
+            if (level == 0) {
+              if (resp.passwordStatus == 0) {
+                window.open("setProfileAndTransactionPassword.html", "_self");
+              } else {
+                window.open("dashboard.html", "_self");
+              }
+            } else {
+              window.open("adminDashboard.html", "_self");
+            }
+          }
+        } else {
+          document.getElementById("loginMessage").innerHTML = resp.errorMessage;
+          document.getElementById("loginMessage").style.display =
+            "inline-block";
+        }
+      }
+    </script>
+  </body>
+</html>

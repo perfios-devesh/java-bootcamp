@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Perfios Bank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <style>
+      .col-1 {
+        margin-left: 0;
+        padding-left: 0;
+        margin-top: 0;
+        padding-top: 0;
+      }
+
+      .user-div {
+        border: 2px solid #c0c0c0;
+        padding: 0;
+        margin-top: 25px;
+        border-radius: 12px;
+      }
+      .first-row {
+        width: 100%;
+        padding: 0px;
+        height: 52px;
+        border-radius: 10px;
+        padding-top: 10px;
+        padding-bottom: -5px;
+        font-size: 19px;
+        background-color: #c0c0c0;
+        color: black;
+        margin-left: 0;
+      }
+
+      .row {
+        margin-top: 10px;
+      }
+      .col-4,
+      .col-1,
+      .col-2,
+      .col-3,
+      .col-8 {
+        margin-bottom: 15px;
+        text-align: left;
+      }
+    </style>
+  </head>
+
+  <body style="background-color: black; color: white">
+    <div style="width: 80%; margin: auto; margin-top: 10px">
+      <div id="nav-placeholder"></div>
+
+      <div style="text-align: center; width: 100%" id="main">
+        <div class="container">
+          <br />
+          <h2>All Clients</h2>
+          <div id="inject"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var clientId;
+      var userName;
+      var userId;
+      var iter = 0;
+      $(function () {
+        $("#nav-placeholder").load("nav.html");
+
+        sessionStorage.removeItem("clientId");
+        userName = sessionStorage.getItem("name");
+        userId = sessionStorage.getItem("userId");
+        getAllClientsApiCall();
+      });
+
+      function setNavBarValues() {
+        document.getElementById("navbarDropdownMenuLink").innerHTML = userName;
+        document.getElementById("commonNavBar").style.display = "flex";
+        document.getElementById("commonNavBar").style.float = "right";
+        document
+          .getElementById("dashboardLink")
+          .setAttribute("href", "adminDashboard.html");
+        document
+          .getElementById("imageLink")
+          .setAttribute("href", "adminDashboard.html");
+      }
+
+      async function getAllClientsApiCall() {
+        let response = await fetch("http://localhost:5550/banking/client", {
+          method: "GET",
+        });
+
+        let resp = await response.json();
+        console.log(resp);
+        clientDTOS = resp.clientDTOS;
+        console.log(clientDTOS);
+
+        clientDTOS.forEach(createUsers);
+
+        setNavBarValues();
+      }
+
+      function createUsers(item) {
+        var clientId = item.clientId;
+        var firstName = item.firstName;
+        var lastName = item.lastName;
+        var motherName = item.motherName;
+        var fatherName = item.fatherName;
+        var registeredMobileNumber = item.registeredMobileNumber;
+        var alternateMobileNumber = item.alternateMobileNumber;
+        var email = item.email;
+        var aadhaarNumber = item.aadhaarNumber;
+        var panNumber = item.panNumber;
+        var status = item.status;
+
+        addMore(
+          clientId,
+          firstName,
+          lastName,
+          motherName,
+          fatherName,
+          registeredMobileNumber,
+          alternateMobileNumber,
+          email,
+          aadhaarNumber,
+          panNumber,
+          status
+        );
+      }
+
+      function addMore(
+        clientId,
+        firstName,
+        lastName,
+        motherName,
+        fatherName,
+        registeredMobileNumber,
+        alternateMobileNumber,
+        email,
+        aadhaarNumber,
+        panNumber,
+        status
+      ) {
+        var injectDiv = document.getElementById("inject");
+
+        var userDiv = document.createElement("div");
+        userDiv.setAttribute("id", `userDiv[${clientId}]`);
+        userDiv.classList.add("user-div");
+
+        var firstRow = document.createElement("div");
+        firstRow.classList.add("row");
+        firstRow.classList.add("first-row");
+        firstRow.style.marginTop = 0;
+
+        var buttonCol = document.createElement("div");
+        buttonCol.classList.add("col-1");
+
+        var hideUserBtn = document.createElement("button");
+        hideUserBtn.setAttribute("type", "button");
+        hideUserBtn.classList.add("btn", "btn-sm");
+        hideUserBtn.setAttribute(
+          "style",
+          "margin-right:1%;font-size:19px;font-weight: 900;background-color:#C0C0C0; border: none;box-shadow: none; color: black"
+        );
+
+        // #ffb92c
+        hideUserBtn.setAttribute("onclick", `showUser(${clientId})`);
+        hideUserBtn.setAttribute("id", `hideUserButton(${clientId})`);
+        hideUserBtn.textContent = ">";
+
+        buttonCol.appendChild(hideUserBtn);
+
+        var clientIdCol = document.createElement("div");
+        clientIdCol.classList.add("col-2");
+        clientIdCol.innerHTML = clientId;
+
+        var firstNameCol = document.createElement("div");
+        firstNameCol.classList.add("col-3");
+        firstNameCol.innerHTML = firstName;
+
+        var lastNameCol = document.createElement("div");
+        lastNameCol.classList.add("col-3");
+        lastNameCol.innerHTML = lastName;
+
+        var statusCol = document.createElement("div");
+        statusCol.classList.add("col-3");
+        statusCol.setAttribute("id", `status[${clientId}]`);
+        statusCol.innerHTML = status;
+
+        firstRow.appendChild(buttonCol);
+        firstRow.appendChild(clientIdCol);
+        firstRow.appendChild(firstNameCol);
+        firstRow.appendChild(lastNameCol);
+        firstRow.appendChild(statusCol);
+
+        var secondRow = document.createElement("div");
+        secondRow.classList.add("row");
+        secondRow.setAttribute("id", `secondRow[${clientId}]`);
+        secondRow.setAttribute("style", "display:none");
+
+        var firstInsideRow = document.createElement("div");
+        firstInsideRow.classList.add("row");
+
+        var extraCol1 = document.createElement("div");
+        extraCol1.classList.add("col-1");
+
+        var extraCol2 = document.createElement("div");
+        extraCol2.classList.add("col-2");
+
+        var motherNameCol = document.createElement("div");
+        motherNameCol.classList.add("col-3");
+        motherNameCol.innerHTML = motherName;
+
+        var fatherNameCol = document.createElement("div");
+        fatherNameCol.classList.add("col-3");
+        fatherNameCol.innerHTML = fatherName;
+
+        var alternateMobileNumberCol = document.createElement("div");
+        alternateMobileNumberCol.classList.add("col-3");
+        alternateMobileNumberCol.innerHTML = alternateMobileNumber;
+
+        firstInsideRow.appendChild(extraCol1);
+        firstInsideRow.appendChild(extraCol2);
+        firstInsideRow.appendChild(motherNameCol);
+        firstInsideRow.appendChild(motherNameCol);
+        firstInsideRow.appendChild(fatherNameCol);
+        firstInsideRow.appendChild(alternateMobileNumberCol);
+
+        var secondInsideRow = document.createElement("div");
+        secondInsideRow.classList.add("row");
+
+        var extraCol21 = document.createElement("div");
+        extraCol21.classList.add("col-1");
+
+        var extraCol22 = document.createElement("div");
+        extraCol22.classList.add("col-2");
+
+        var emailCol = document.createElement("div");
+        emailCol.classList.add("col-3");
+        emailCol.innerHTML = email;
+
+        var aadhaarNumberCol = document.createElement("div");
+        aadhaarNumberCol.classList.add("col-3");
+        aadhaarNumberCol.innerHTML = aadhaarNumber;
+
+        var panNumberCol = document.createElement("div");
+        panNumberCol.classList.add("col-3");
+        panNumberCol.innerHTML = panNumber;
+
+        secondInsideRow.appendChild(extraCol21);
+        secondInsideRow.appendChild(extraCol22);
+        secondInsideRow.appendChild(emailCol);
+        secondInsideRow.appendChild(aadhaarNumberCol);
+        secondInsideRow.appendChild(panNumberCol);
+
+        var thirdInsideRow = document.createElement("div");
+        thirdInsideRow.classList.add("row");
+        thirdInsideRow.classList.add("justify-content-center");
+
+        var approveCol = document.createElement("div");
+        approveCol.classList.add("col-3");
+        approveCol.style.textAlign = "center";
+        approveCol.setAttribute("id", `approveCol(${clientId})`);
+
+        var approveBtn = document.createElement("button");
+        approveBtn.setAttribute("type", "button");
+
+        approveBtn.classList.add("btn", "btn-primary");
+        approveBtn.setAttribute("onclick", `approveUser(${clientId})`);
+        approveBtn.textContent = "Approve User";
+
+        approveCol.appendChild(approveBtn);
+
+        var seeAccountsCol = document.createElement("div");
+        seeAccountsCol.classList.add("col-3");
+        seeAccountsCol.style.textAlign = "center";
+        seeAccountsCol.setAttribute("id", `seeAccountsCol(${clientId})`);
+
+        var seeAccountsBtn = document.createElement("button");
+        seeAccountsBtn.setAttribute("type", "button");
+        seeAccountsBtn.setAttribute("id", `seeAccountButton(${clientId})`);
+        seeAccountsBtn.classList.add("btn", "btn-primary");
+        seeAccountsBtn.setAttribute(
+          "onclick",
+          `seeAccountsOfUser(${clientId})`
+        );
+        seeAccountsBtn.textContent = "See Accounts";
+
+        seeAccountsCol.appendChild(seeAccountsBtn);
+
+        thirdInsideRow.appendChild(approveCol);
+        thirdInsideRow.appendChild(seeAccountsCol);
+
+        secondRow.appendChild(firstInsideRow);
+        secondRow.appendChild(secondInsideRow);
+        secondRow.appendChild(thirdInsideRow);
+
+        userDiv.appendChild(firstRow);
+        userDiv.appendChild(secondRow);
+        injectDiv.appendChild(userDiv);
+
+        approveUserButtonHide(clientId);
+      }
+
+      function hideUser(id) {
+        var div = document.getElementById(`secondRow[${id}]`);
+        div.style.display = "none";
+        var btn = document.getElementById(`hideUserButton(${id})`);
+        btn.setAttribute("onclick", `showUser(${id})`);
+        btn.textContent = ">";
+      }
+
+      function showUser(id) {
+        var div = document.getElementById(`secondRow[${id}]`);
+        div.style.display = "block";
+        var btn = document.getElementById(`hideUserButton(${id})`);
+        btn.setAttribute("onclick", `hideUser(${id})`);
+        btn.textContent = "v";
+      }
+
+      function approveUserButtonHide(id) {
+        var status = document.getElementById(`status[${id}]`).innerHTML;
+        if (status == "APPROVED") {
+          document.getElementById(`approveCol(${id})`).style.display = "none";
+        } else {
+          document.getElementById(`seeAccountsCol(${id})`).style.display =
+            "none";
+        }
+      }
+
+      function approveUser(id) {
+        approveUserApiCall(id);
+      }
+
+      async function approveUserApiCall(id) {
+        let response = await fetch(
+          "http://localhost:5550/banking/client/approve?clientId=" + id,
+          {
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+          }
+        );
+
+        let resp = await response.json();
+        console.log(resp);
+
+        window.open("adminDashboard.html", "_self");
+      }
+
+      function seeAccountsOfUser(id) {
+        sessionStorage.setItem("clientId", id);
+        window.open("dashboard.html", "_self");
+      }
+    </script>
+  </body>
+</html>

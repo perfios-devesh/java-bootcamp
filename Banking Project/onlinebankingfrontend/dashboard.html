@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Perfios Bank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="filesaver.js"></script>
+    <style>
+      .col-4,
+      .col-8 {
+        margin-bottom: 15px;
+        text-align: left;
+      }
+    </style>
+  </head>
+
+  <body style="background-color: black; color: white">
+    <div style="width: 80%; margin: auto; margin-top: 10px">
+      <div id="nav-placeholder"></div>
+      <div style="text-align: center; width: 100%" id="main">
+        <div class="container">
+          <br />
+          <h2>Your Accounts</h2>
+          <div class="row mt-5">
+            <div class="col-md-12">
+              <table class="table border-dark text-center" style="color: white">
+                <thead>
+                  <tr>
+                    <th>Account Number</th>
+                    <th>Type</th>
+                    <th>Branch</th>
+                    <th>Balance / Status</th>
+                    <th id="actionHeader" style="display: none">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="inject"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: black">
+              <h5
+                class="modal-title"
+                id="exampleModalLabel"
+                style="color: white"
+              >
+                Loan Application
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                style="background-color: white; color: black"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <div
+                    class="col-md-5 offset-md-4 login-form"
+                    id="myForm"
+                    style="color: black"
+                  >
+                    <form onsubmit="apply(); return false;">
+                      <h5>Loan Details</h5>
+                      <div class="row justify-content-center">
+                        <div class="col-12">
+                          <label for="loanAmount" class="form-label"
+                            >Loan Amount</label
+                          >
+                          <input
+                            required="required"
+                            type="number"
+                            class="form-control"
+                            id="loanAmount"
+                          />
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-12">
+                          <label for="loanPeriod" class="form-label"
+                            >Loan Period in Years</label
+                          >
+                          <input
+                            required="required"
+                            type="number"
+                            class="form-control"
+                            id="loanPeriod"
+                          />
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-12">
+                          <label for="branch" class="form-label">Branch</label>
+                          <select
+                            required="required"
+                            class="form-control"
+                            id="branch"
+                            placeholder="Branch"
+                          >
+                            <option selected disabled>Select Branch</option>
+                          </select>
+                        </div>
+                      </div>
+                      <br />
+                      <h5>Personal Details</h5>
+                      <div class="row justify-content-center">
+                        <div class="col-12">
+                          <label for="age" class="form-label"
+                            >Age In Years</label
+                          >
+                          <input
+                            required="required"
+                            type="number"
+                            class="form-control"
+                            id="age"
+                          />
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-12">
+                          <label for="lengthOfService" class="form-label"
+                            >Length of Current Service/Business in Years</label
+                          >
+                          <input
+                            required="required"
+                            type="number"
+                            class="form-control"
+                            id="lengthOfService"
+                          />
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-12">
+                          <label for="employmentDetails" class="form-label"
+                            >Employment Details</label
+                          >
+                          <select
+                            class="form-control"
+                            id="employmentDetails"
+                            name="employmentDetails"
+                          >
+                            <option selected disabled value="">
+                              Employment Details
+                            </option>
+                            <option value="PSU'S/BANKS/INSURANCE COMPANIES">
+                              PSU'S/BANKS/INSURANCE COMPANIES
+                            </option>
+                            <option value="MULTINATIONAL COMPANIES">
+                              MULTINATIONAL COMPANIES
+                            </option>
+                            <option value="GOVT. (CENTRAL/STATE) DEPARTMENTS">
+                              GOVT. (CENTRAL/STATE) DEPARTMENTS
+                            </option>
+                            <option value="OTHER CORPORATES">
+                              OTHER CORPORATES
+                            </option>
+                            <option
+                              value="SMALL SECTOR (PVT. LTD. - PARTNERSHIPS - PROPRIETORSHIP"
+                            >
+                              SMALL SECTOR (PVT. LTD. - PARTNERSHIPS -
+                              PROPRIETORSHIP
+                            </option>
+                            <option value="UNORGANISED SECTOR">
+                              UNORGANISED SECTOR
+                            </option>
+                            <option selected disabled value="">
+                              Self Employment Details
+                            </option>
+                            <option value="DOCTOR">DOCTOR</option>
+                            <option value="LAWYER/C.A./I.C.W.A./ARCHITECTS">
+                              LAWYER/C.A./I.C.W.A./ARCHITECTS
+                            </option>
+                            <option
+                              value="BIG BUSINESS OPERATOR [INDUSTRY/TRADE T/O ABOVE RS.50 LACS]"
+                            >
+                              BIG BUSINESS OPERATOR [INDUSTRY/TRADE T/O ABOVE
+                              RS.50 LACS]
+                            </option>
+                            <option
+                              value="SMALL BUSINESS/SHOP OWNER (INDUSTRY/TRADE T/O UPTO RS.50 LACS]"
+                            >
+                              SMALL BUSINESS/SHOP OWNER (INDUSTRY/TRADE T/O UPTO
+                              RS.50 LACS]
+                            </option>
+                            <option value="OTHER SELF EMPLOYED">
+                              OTHER SELF EMPLOYED
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-12">
+                          <label for="houseOwned" class="form-label"
+                            >House Ownership</label
+                          >
+                          <select
+                            required="required"
+                            class="form-control"
+                            id="houseOwned"
+                          >
+                            <option selected disabled value="">
+                              House Ownership
+                            </option>
+                            <option
+                              value="HOUSE IS SELF- OWNED -IN THE SAME PLACE"
+                            >
+                              HOUSE IS SELF- OWNED -IN THE SAME PLACE
+                            </option>
+                            <option
+                              value="HOUSE IS SELF- OWNED -AT OTHER PLACE"
+                            >
+                              HOUSE IS SELF- OWNED -AT OTHER PLACE
+                            </option>
+                            <option value="HOUSE IS OWNED BY SPOUSE">
+                              HOUSE IS OWNED BY SPOUSE
+                            </option>
+                            <option
+                              value="RENTED HOUSE IN OWN NAME FOR MORE THAN 5 YEARS"
+                            >
+                              RENTED HOUSE IN OWN NAME FOR MORE THAN 5 YEARS
+                            </option>
+                            <option value="RENTED HOUSE LESS THAN 5 YEARS">
+                              RENTED HOUSE LESS THAN 5 YEARS
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-12">
+                          <label for="numberOfDependents" class="form-label"
+                            >Number of Dependents</label
+                          >
+                          <input
+                            required="required"
+                            type="number"
+                            class="form-control"
+                            id="numberOfDependents"
+                          />
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-12">
+                          <label for="cibilScore" class="form-label"
+                            >Cibil Score</label
+                          >
+                          <input
+                            required="required"
+                            type="number"
+                            class="form-control"
+                            id="cibilScore"
+                          />
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-12">
+                          <label for="guarantorAvailable" class="form-label"
+                            >Guarantor</label
+                          >
+                          <select
+                            required="required"
+                            class="form-control"
+                            id="guarantorAvailable"
+                            onchange="showGuarantorDetails();"
+                          >
+                            <option selected disabled value="">
+                              Guarantor
+                            </option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div
+                        class="row"
+                        id="guarantorDetails"
+                        style="display: none"
+                      >
+                        <br />
+                        <h5>Guarantor Details</h5>
+                        <div class="row justify-content-center">
+                          <div class="col-12">
+                            <label for="guarantorName" class="form-label"
+                              >Guarantor Name</label
+                            >
+                            <input
+                              required="required"
+                              type="text"
+                              class="form-control"
+                              id="guarantorName"
+                            />
+                          </div>
+                        </div>
+                        <div class="row justify-content-center">
+                          <div class="col-12">
+                            <label
+                              for="guarantorMobileNumber"
+                              class="form-label"
+                              >Guarantor Mobile Number</label
+                            >
+                            <input
+                              required="required"
+                              type="number"
+                              class="form-control"
+                              id="guarantorMobileNumber"
+                            />
+                          </div>
+                        </div>
+                        <div class="row justify-content-center">
+                          <div class="col-12">
+                            <label for="guarantorPanNumber" class="form-label"
+                              >Guarantor PAN Number</label
+                            >
+                            <input
+                              required="required"
+                              type="text"
+                              class="form-control"
+                              id="guarantorPanNumber"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <br />
+                      <h5>Documents</h5>
+                      <div class="row justify-content-center">
+                        <div class="col-3">
+                          <button
+                            class="btn btn-success"
+                            style="width: 100%"
+                            id="idProofBtn"
+                          >
+                            Id Proof
+                          </button>
+                        </div>
+                        <div class="col-4">
+                          <button
+                            class="btn btn-success"
+                            style="width: 100%"
+                            id="addressProofBtn"
+                          >
+                            Address Proof
+                          </button>
+                        </div>
+                        <div class="col-5">
+                          <button
+                            class="btn btn-success"
+                            style="width: 100%"
+                            id="bankStatementBtn"
+                          >
+                            Bank Statement
+                          </button>
+                        </div>
+                        <br />
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-4">
+                          <button
+                            class="btn btn-primary"
+                            style="width: 100%"
+                            type="submit"
+                            id="approveLoanAccountBtn"
+                          >
+                            Approve
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var clientId;
+      var clientName;
+      var userId;
+      var iter = 0;
+      $(function () {
+        $("#nav-placeholder").load("nav.html");
+
+        clientId = sessionStorage.getItem("clientId");
+        clientName = sessionStorage.getItem("name");
+        userId = sessionStorage.getItem("userId");
+
+        getAllAccountsApiCall();
+        getAllBranchesApiCall();
+      });
+
+      async function getAllAccountsApiCall() {
+        let data = {
+          clientId: clientId,
+        };
+
+        console.log(data);
+
+        let response = await fetch(
+          "http://localhost:5550/banking/account/all?clientId=" + clientId,
+          {
+            method: "GET",
+          }
+        );
+
+        let resp = await response.json();
+        console.log(resp);
+        accountDetailsDTOS = resp.accountDetailsDTOS;
+        console.log(accountDetailsDTOS);
+
+        if (userId != null) {
+          document.getElementById("actionHeader").style.display = "";
+        }
+        accountDetailsDTOS.forEach(createTable);
+      }
+
+      async function getAllBranchesApiCall() {
+        let response = await fetch("http://localhost:5550/banking/branch", {
+          method: "GET",
+        });
+
+        let resp = await response.json();
+
+        console.log(resp);
+        branchDTOS = resp.branchDTOS;
+        console.log(branchDTOS);
+        branchDTOS.forEach(createOptions);
+        setNavBarValues();
+      }
+
+      function createOptions(item) {
+        var branchId = item.branchId;
+        var branchName = item.branchName;
+        var pinCode = item.pinCode;
+
+        var select = document.getElementById("branch");
+
+        var opt = document.createElement("option");
+        opt.setAttribute("value", branchId);
+        opt.innerHTML = branchName + " ( " + pinCode + " )";
+
+        select.appendChild(opt);
+      }
+
+      function setNavBarValues() {
+        document.getElementById("navbarDropdownMenuLink").innerHTML =
+          clientName;
+        document.getElementById("clientNavBar").style.display = "flex";
+        document.getElementById("commonNavBar").style.display = "flex";
+
+        if (userId != null) {
+          document
+            .getElementById("dashboardLink")
+            .setAttribute("href", "adminDashboard.html");
+        } else {
+          document
+            .getElementById("dashboardLink")
+            .setAttribute("href", "dashboard.html");
+        }
+
+        document
+          .getElementById("imageLink")
+          .setAttribute("href", "dashboard.html");
+      }
+
+      function createTable(item) {
+        var accountNumber = item.accountNumber;
+        var accountType = item.type;
+        var branch = item.branchName;
+        var balance = item.balance;
+        var status = item.status;
+        addMore(accountType, accountNumber, branch, balance, status);
+      }
+
+      function addMore(accountType, accountNumber, branch, balance, status) {
+        var table = document.getElementById("inject");
+        var tableRow = document.createElement("tr");
+        tableRow.setAttribute("id", `row[${accountNumber}]`);
+        
+        var td1 = document.createElement("td");
+        td1.setAttribute("id", `accountNumber[${accountNumber}]`);
+        td1.innerHTML = accountNumber;
+
+        var td2 = document.createElement("td");
+        td2.setAttribute("id", `accountType[${accountNumber}]`);
+        td2.innerHTML = accountType;
+
+        var td3 = document.createElement("td");
+        td3.setAttribute("id", `branch[${accountNumber}]`);
+        td3.innerHTML = branch;
+
+        var td4 = document.createElement("td");
+        td4.setAttribute("id", `balance/status[${accountNumber}]`);
+        
+
+        if (status == "APPROVED") {
+          var viewLink = document.createElement("button");
+          viewLink.innerText = "View Balance";
+          viewLink.setAttribute("id", `viewLink[${accountNumber}]`);
+          viewLink.style.display = "inline-block";
+          viewLink.style.textDecoration = "underline";
+          viewLink.style.background = "none";
+          viewLink.style.padding = "0";
+          viewLink.style.border = "none";
+          viewLink.style.color = "white";
+          viewLink.setAttribute("onclick", `showBalance(${accountNumber});`);
+
+          var balanceDisplay = document.createElement("button");
+          balanceDisplay.innerText = "Rs " + balance;
+          balanceDisplay.style.textDecoration = "none";
+          balanceDisplay.style.background = "none";
+          balanceDisplay.style.padding = "0";
+          balanceDisplay.style.border = "none";
+          balanceDisplay.style.display = "none";
+          balanceDisplay.style.color = "white";
+          balanceDisplay.setAttribute("id", `balanceDisplay[${accountNumber}]`);
+
+          td4.appendChild(viewLink);
+          td4.appendChild(balanceDisplay);
+        } else {
+          td4.innerHTML = status;
+        }
+
+        var td5;
+        if (userId != null) {
+          td5 = document.createElement("td");
+
+          var approveBtn = document.createElement("button");
+          approveBtn.setAttribute("type", "button");
+
+          approveBtn.classList.add("btn", "btn-primary");
+          approveBtn.setAttribute(
+            "onclick",
+            `approveAccount(${accountNumber})`
+          );
+          approveBtn.textContent = "Approve Account";
+
+          var loanApplicationBtn = document.createElement("button");
+          loanApplicationBtn.setAttribute("type", "button");
+
+          loanApplicationBtn.classList.add("btn", "btn-primary");
+          loanApplicationBtn.setAttribute(
+            "onclick",
+            `getLoanAccount(${accountNumber})`
+          );
+          loanApplicationBtn.textContent = "View Application";
+          loanApplicationBtn.setAttribute("data-bs-toggle", "modal");
+          loanApplicationBtn.setAttribute("data-bs-target", "#exampleModal");
+
+          if (status != "APPROVED") {
+            if (accountType == "LOAN ACCOUNT") {
+              td5.appendChild(loanApplicationBtn);
+            } else {
+              td5.appendChild(approveBtn);
+            }
+          } else {
+            td5.innerHTML = "APPROVED";
+          }
+        }
+        tableRow.append(td1, td2, td3, td4);
+        if (userId != null) tableRow.appendChild(td5);
+        table.appendChild(tableRow);
+        iter++;
+      }
+
+      async function getLoanDetailsApiCall(account) {
+        console.log(account);
+        let response = await fetch(
+          "http://localhost:5550/banking/loan/details?accountNumber=" +
+            account,
+          {
+            headers: { "Content-Type": "application/json" },
+            method: "GET"
+          }
+        );
+
+        let resp = await response.json();
+        console.log(resp);
+
+        var td1 = document.getElementById(`accountType[${account}]`);
+        td1.innerHTML = td1.innerHTML + "<br/><br/> Period: " + resp.loanPeriod + " years";
+
+        var td2 =document.getElementById(`branch[${account}]`);
+        
+        td2.innerHTML = td2.innerHTML + "<br/> <br/> EMI: Rs. " + Math.round(resp.emi * 100) / 100;
+
+        var td3 =document.getElementById(`balance/status[${account}]`);
+        td3.innerHTML = td3.innerHTML + "<br/> <br/> ROI: " + resp.roi + "%";
+      }
+
+      function showBalance(id) {
+        console.log("Here" + id);
+
+        var accountType = document.getElementById(`accountType[${id}]`).innerHTML;
+
+        if(accountType == "LOAN ACCOUNT"){
+          getLoanDetailsApiCall(id);
+        }
+
+        document.getElementById(`viewLink[${id}]`).style.display = "none";
+        document.getElementById(`balanceDisplay[${id}]`).style.display =
+          "inline-block";
+      }
+
+      function approveAccount(account) {
+        approveAccountApiCall(account);
+      }
+
+      async function approveAccountApiCall(account) {
+        let response = await fetch(
+          "http://localhost:5550/banking/account/approve?accountNumber=" +
+            account,
+          {
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+          }
+        );
+
+        let resp = await response.json();
+        console.log(resp);
+
+        window.open("dashboard.html", "_self");
+      }
+
+      function getLoanAccount(account) {
+        console.log("loan" + account);
+
+        getLoanAccountApiCall(account);
+      }
+
+      async function getLoanAccountApiCall(account) {
+        let response = await fetch(
+          "http://localhost:5550/banking/loan?accountNumber=" + account,
+          {
+            method: "GET",
+          }
+        );
+
+        let resp = await response.json();
+        console.log(resp);
+
+        document.getElementById("branch").value = resp.branchId;
+        document.getElementById("loanAmount").value = resp.loanAmount;
+        document.getElementById("loanPeriod").value = resp.loanPeriod;
+        document.getElementById("age").value = resp.ageInYears;
+        document.getElementById("lengthOfService").value =
+          resp.lengthOfServiceInYears;
+        document.getElementById("employmentDetails").value =
+          resp.employmentDetails;
+
+        document.getElementById("houseOwned").value = resp.houseOwned;
+        document.getElementById("numberOfDependents").value =
+          resp.numberOfDependants;
+        document.getElementById("cibilScore").value = resp.cibilScore;
+        document.getElementById("guarantorAvailable").value =
+          resp.guarantorAvailable;
+
+        if (resp.guarantorAvailable == true) {
+          document.getElementById("guarantorDetails").style.display = "block";
+          document.getElementById("guarantorName").value = resp.guarantorName;
+          document.getElementById("guarantorMobileNumber").value =
+            resp.guarantorMobileNumber;
+          document.getElementById("guarantorPanNumber").value =
+            resp.guarantorPanNumber;
+        } else {
+          document.getElementById("guarantorDetails").style.display = "none";
+          guarantorName = null;
+          guarantorMobileNumber = null;
+          guarantorPanNumber = null;
+        }
+
+        var idProofDocumentId = resp.idProofDocumentId;
+        var idProofDocumentType = resp.idProofDocumentType;
+
+        var addressProofDocumentId = resp.addressProofDocumentId;
+        var addressProofDocumentType = resp.addressProofDocumentType;
+
+        var bankStatementDocumentId = resp.bankStatementDocumentId;
+        var bankStatementDocumentType = resp.bankStatementDocumentType;
+
+        document
+          .getElementById("idProofBtn")
+          .setAttribute(
+            "onclick",
+            `viewIdProof(${idProofDocumentId});return false;`
+          );
+        document
+          .getElementById("idProofBtn")
+          .setAttribute("name", `${idProofDocumentType}`);
+        document
+          .getElementById("addressProofBtn")
+          .setAttribute(
+            "onclick",
+            `viewAddressProof(${addressProofDocumentId});return false;`
+          );
+        document
+          .getElementById("addressProofBtn")
+          .setAttribute("name", `${addressProofDocumentType}`);
+        document
+          .getElementById("bankStatementBtn")
+          .setAttribute(
+            "onclick",
+            `viewBankStatement(${bankStatementDocumentId});return false;`
+          );
+        document
+          .getElementById("bankStatementBtn")
+          .setAttribute("name", `${bankStatementDocumentType}`);
+
+        document
+          .getElementById("approveLoanAccountBtn")
+          .setAttribute(
+            "onclick",
+            `approveLoan(${resp.accountNumber});return false;`
+          );
+      }
+
+      function viewIdProof(documentId) {
+        var documentType = document
+          .getElementById("idProofBtn")
+          .getAttribute("name");
+        console.log(documentId, documentType);
+        downloadDocumentApiCall(documentId, documentType);
+      }
+      function viewAddressProof(documentId) {
+        var documentType = document
+          .getElementById("addressProofBtn")
+          .getAttribute("name");
+        console.log(documentId, documentType);
+        downloadDocumentApiCall(documentId, documentType);
+      }
+      function viewBankStatement(documentId) {
+        var documentType = document
+          .getElementById("bankStatementBtn")
+          .getAttribute("name");
+        console.log(documentId, documentType);
+        downloadDocumentApiCall(documentId, documentType);
+      }
+
+      async function downloadDocumentApiCall(documentId, documentType) {
+        fetch(
+          "http://localhost:5550/banking/loan/documents?loanDocumentId=" +
+            documentId,
+          {
+            method: "GET",
+          }
+        )
+          .then((result) => result.blob())
+          .then((myBlob) => {
+            var file = new File([myBlob], documentType, {
+              type: documentType,
+            });
+
+            saveAs(file);
+          });
+      }
+
+      function approveLoan(account) {
+        console.log(account);
+        approveLoanApiCall(account);
+      }
+
+      async function approveLoanApiCall(account) {
+        console.log(account);
+        let response = await fetch(
+          "http://localhost:5550/banking/loan/approve?accountNumber=" + account,
+          {
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+          }
+        );
+
+        let resp = await response.json();
+        console.log(resp);
+
+        window.open("dashboard.html", "_self");
+      }
+    </script>
+  </body>
+</html>

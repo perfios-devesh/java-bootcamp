@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Perfios Bank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <style>
+      .col-6,
+      .col-8 {
+        margin-bottom: 15px;
+        text-align: left;
+      }
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      .form-control:disabled {
+        background-color: black;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body style="background-color: black; color: white">
+    <div style="width: 80%; margin: auto; margin-top: 10px">
+      <div id="nav-placeholder"></div>
+
+      <div style="text-align: center; width: 100%" id="main">
+        <div
+          class="col-9 justify-content-center"
+          style="
+            margin: auto;
+            text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+          "
+        >
+          <div class="container">
+            <form
+              onsubmit="applyLoan();return false;"
+              id="formDiv"
+              style="display: block"
+            >
+              <h2>Apply for Personal Loan</h2>
+              <br />
+              <h5>Loan Details</h5>
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <label for="loanAmount" class="form-label">Loan Amount</label>
+                  <input
+                    required="required"
+                    type="number"
+                    class="form-control"
+                    id="loanAmount"
+                  />
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <label for="loanPeriod" class="form-label"
+                    >Loan Period in Years</label
+                  >
+                  <input
+                    required="required"
+                    type="number"
+                    class="form-control"
+                    id="loanPeriod"
+                  />
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <label for="branch" class="form-label">Branch</label>
+                  <select
+                    required="required"
+                    class="form-control"
+                    id="branch"
+                    placeholder="Branch"
+                  >
+                    <option selected disabled>Select Branch</option>
+                  </select>
+                </div>
+              </div>
+              <h5>Personal Details</h5>
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <label for="age" class="form-label">Age In Years</label>
+                  <input
+                    required="required"
+                    type="number"
+                    class="form-control"
+                    id="age"
+                  />
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <label for="lengthOfService" class="form-label"
+                    >Length of Current Service/Business in Years</label
+                  >
+                  <input
+                    required="required"
+                    type="number"
+                    class="form-control"
+                    id="lengthOfService"
+                  />
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <label for="employmentType" class="form-label"
+                    >Employment Type</label
+                  >
+                  <select
+                    required="required"
+                    class="form-control"
+                    id="employmentType"
+                    onchange="showEmployment();"
+                  >
+                    <option selected disabled value="">Employment Type</option>
+                    <option value="Salaried">Salaried</option>
+                    <option value="Self-Employed">Self Employed</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-6" id="salariedDiv" style="display: none">
+                  <label for="employmentDetails" class="form-label"
+                    >Employment Details</label
+                  >
+                  <select
+                    class="form-control"
+                    id="employmentDetails"
+                    name="employmentDetails"
+                  >
+                    <option selected disabled value="">
+                      Employment Details
+                    </option>
+                    <option value="PSU'S/BANKS/INSURANCE COMPANIES">
+                      PSU'S/BANKS/INSURANCE COMPANIES
+                    </option>
+                    <option value="MULTINATIONAL COMPANIES">
+                      MULTINATIONAL COMPANIES
+                    </option>
+                    <option value="GOVT. (CENTRAL/STATE) DEPARTMENTS">
+                      GOVT. (CENTRAL/STATE) DEPARTMENTS
+                    </option>
+                    <option value="OTHER CORPORATES">OTHER CORPORATES</option>
+                    <option
+                      value="SMALL SECTOR (PVT. LTD. - PARTNERSHIPS - PROPRIETORSHIP"
+                    >
+                      SMALL SECTOR (PVT. LTD. - PARTNERSHIPS - PROPRIETORSHIP
+                    </option>
+                    <option value="UNORGANISED SECTOR">
+                      UNORGANISED SECTOR
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-6" id="selfEmployedDiv" style="display: none">
+                  <label for="selfEmploymentDetails" class="form-label"
+                    >Self - Employment Details</label
+                  >
+                  <select
+                    class="form-control"
+                    id="selfEmploymentDetails"
+                    name="selfEmploymentDetails"
+                  >
+                    <option selected disabled value="">
+                      Self Employment Details
+                    </option>
+                    <option value="DOCTOR">DOCTOR</option>
+                    <option value="LAWYER/C.A./I.C.W.A./ARCHITECTS">
+                      LAWYER/C.A./I.C.W.A./ARCHITECTS
+                    </option>
+                    <option
+                      value="BIG BUSINESS OPERATOR [INDUSTRY/TRADE T/O ABOVE RS.50 LACS]"
+                    >
+                      BIG BUSINESS OPERATOR [INDUSTRY/TRADE T/O ABOVE RS.50
+                      LACS]
+                    </option>
+                    <option
+                      value="SMALL BUSINESS/SHOP OWNER (INDUSTRY/TRADE T/O UPTO RS.50 LACS]"
+                    >
+                      SMALL BUSINESS/SHOP OWNER (INDUSTRY/TRADE T/O UPTO RS.50
+                      LACS]
+                    </option>
+                    <option value="OTHER SELF EMPLOYED">
+                      OTHER SELF EMPLOYED
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <label for="houseOwned" class="form-label"
+                    >House Ownership</label
+                  >
+                  <select
+                    required="required"
+                    class="form-control"
+                    id="houseOwned"
+                  >
+                    <option selected disabled value="">House Ownership</option>
+                    <option value="HOUSE IS SELF- OWNED -IN THE SAME PLACE">
+                      HOUSE IS SELF- OWNED -IN THE SAME PLACE
+                    </option>
+                    <option value="HOUSE IS SELF- OWNED -AT OTHER PLACE">
+                      HOUSE IS SELF- OWNED -AT OTHER PLACE
+                    </option>
+                    <option value="HOUSE IS OWNED BY SPOUSE">
+                      HOUSE IS OWNED BY SPOUSE
+                    </option>
+                    <option
+                      value="RENTED HOUSE IN OWN NAME FOR MORE THAN 5 YEARS"
+                    >
+                      RENTED HOUSE IN OWN NAME FOR MORE THAN 5 YEARS
+                    </option>
+                    <option value="RENTED HOUSE LESS THAN 5 YEARS">
+                      RENTED HOUSE LESS THAN 5 YEARS
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <label for="numberOfDependents" class="form-label"
+                    >Number of Dependents</label
+                  >
+                  <input
+                    required="required"
+                    type="number"
+                    class="form-control"
+                    id="numberOfDependents"
+                  />
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <label for="cibilScore" class="form-label">Cibil Score</label>
+                  <input
+                    required="required"
+                    type="number"
+                    class="form-control"
+                    id="cibilScore"
+                  />
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <label for="guarantorAvailable" class="form-label"
+                    >Guarantor</label
+                  >
+                  <select
+                    required="required"
+                    class="form-control"
+                    id="guarantorAvailable"
+                    onchange="showGuarantorDetails();"
+                  >
+                    <option selected disabled value="">Guarantor</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row" id="guarantorDetails" style="display: none">
+                <h5>Guarantor Details</h5>
+                <div class="row justify-content-center">
+                  <div class="col-6">
+                    <label for="guarantorName" class="form-label"
+                      >Guarantor Name</label
+                    >
+                    <input
+                      required="required"
+                      type="text"
+                      class="form-control"
+                      id="guarantorName"
+                    />
+                  </div>
+                </div>
+                <div class="row justify-content-center">
+                  <div class="col-6">
+                    <label for="guarantorMobileNumber" class="form-label"
+                      >Guarantor Mobile Number</label
+                    >
+                    <input
+                      required="required"
+                      type="number"
+                      class="form-control"
+                      id="guarantorMobileNumber"
+                    />
+                  </div>
+                </div>
+                <div class="row justify-content-center">
+                  <div class="col-6">
+                    <label for="guarantorPanNumber" class="form-label"
+                      >Guarantor PAN Number</label
+                    >
+                    <input
+                      required="required"
+                      type="text"
+                      class="form-control"
+                      id="guarantorPanNumber"
+                    />
+                  </div>
+                </div>
+              </div>
+              <h5>Required Documents</h5>
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <label for="idProof" class="form-label"
+                    >Id Proof (PAN / Aadhaar)</label
+                  >
+                  <input
+                    required="required"
+                    type="file"
+                    class="form-control"
+                    id="idProof"
+                  />
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <label for="addressProof" class="form-label"
+                    >Address Proof (Voter ID/ House Agreement / Electricity
+                    Bill)</label
+                  >
+                  <input
+                    required="required"
+                    type="file"
+                    class="form-control"
+                    id="addressProof"
+                  />
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <label for="bankStatement" class="form-label"
+                    >Bank Statement for last 6 months</label
+                  >
+                  <input
+                    required="required"
+                    type="file"
+                    class="form-control"
+                    id="bankStatement"
+                  />
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-2">
+                  <button
+                    class="btn btn-primary"
+                    style="width: 100%"
+                    type="submit"
+                  >
+                    Apply
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div
+              id="createdDiv"
+              style="align-items: center; display: none; margin-top: 25%"
+            >
+              <h3>Your Loan Request is Submitted.</h3>
+              <br />
+              <button
+                onclick="window.open('dashboard.html', '_self');"
+                class="btn btn-primary"
+              >
+                Home
+              </button>
+            </div>
+            <div
+              id="errorDiv"
+              style="align-items: center; display: none; margin-top: 25%"
+            >
+              <h3>Error in applying for Loan.</h3>
+              <br />
+              <button
+                onclick="window.open('dashboard.html', '_self');"
+                class="btn btn-primary"
+              >
+                Home
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var clientId;
+      var clientName;
+      var userId;
+      var iter = 0;
+      $(function () {
+        $("#nav-placeholder").load("nav.html");
+
+        clientId = sessionStorage.getItem("clientId");
+        clientName = sessionStorage.getItem("name");
+        userId = sessionStorage.getItem("userId");
+        getAllBranchesApiCall();
+      });
+
+      async function getAllBranchesApiCall() {
+        let response = await fetch("http://localhost:5550/banking/branch", {
+          method: "GET",
+        });
+
+        let resp = await response.json();
+
+        console.log(resp);
+        branchDTOS = resp.branchDTOS;
+        console.log(branchDTOS);
+        branchDTOS.forEach(createOptions);
+        setNavBarValues();
+      }
+
+      function createOptions(item) {
+        var branchId = item.branchId;
+        var branchName = item.branchName;
+        var pinCode = item.pinCode;
+
+        var select = document.getElementById("branch");
+
+        var opt = document.createElement("option");
+        opt.setAttribute("value", branchId);
+        opt.innerHTML = branchName + " ( " + pinCode + " )";
+
+        select.appendChild(opt);
+      }
+
+      function setNavBarValues() {
+        document.getElementById("navbarDropdownMenuLink").innerHTML =
+          clientName;
+        document.getElementById("clientNavBar").style.display = "flex";
+        document.getElementById("commonNavBar").style.display = "flex";
+
+        if (userId != null) {
+          document
+            .getElementById("dashboardLink")
+            .setAttribute("href", "adminDashboard.html");
+        } else {
+          document
+            .getElementById("dashboardLink")
+            .setAttribute("href", "dashboard.html");
+        }
+
+        document
+          .getElementById("imageLink")
+          .setAttribute("href", "dashboard.html");
+      }
+
+      function showEmployment() {
+        var employment = document.getElementById("employmentType").value;
+        if (employment == "Salaried") {
+          document.getElementById("salariedDiv").style.display = "";
+          document.getElementById("selfEmployedDiv").style.display = "none";
+        } else {
+          document.getElementById("salariedDiv").style.display = "none";
+          document.getElementById("selfEmployedDiv").style.display = "";
+        }
+      }
+
+      function showGuarantorDetails() {
+        var guarantor = document.getElementById("guarantorAvailable").value;
+        if (guarantor == "true") {
+          document.getElementById("guarantorDetails").style.display = "";
+        } else {
+          document.getElementById("guarantorDetails").style.display = "none";
+        }
+      }
+
+      function applyLoan() {
+        createLoanAccountsApiCall();
+      }
+
+      var clientLoanDetailsId ;
+      async function createLoanAccountsApiCall() {
+        //account creation
+        var branchId = document.getElementById("branch").value;
+
+        //loan details creation
+        var loanAmount = document.getElementById("loanAmount").value;
+        var loanPeriod = document.getElementById("loanPeriod").value;
+
+        //client loan details creation
+        var age = document.getElementById("age").value;
+        var lengthOfService = document.getElementById("lengthOfService").value;
+        var employmentType = document.getElementById("employmentType").value;
+        var employmentDetails;
+        if (employmentType == "Salaried") {
+          employmentDetails =
+            document.getElementById("employmentDetails").value;
+        } else {
+          employmentDetails = document.getElementById(
+            "selfEmploymentDetails"
+          ).value;
+        }
+        var houseOwned = document.getElementById("houseOwned").value;
+        var numberOfDependents =
+          document.getElementById("numberOfDependents").value;
+        var cibilScore = document.getElementById("cibilScore").value;
+        var guarantorAvailable =
+          document.getElementById("guarantorAvailable").value;
+        var guarantorName, guarantorMobileNumber, guarantorPanNumber;
+
+        if (guarantorAvailable == "true") {
+          guarantorName = document.getElementById("guarantorName").value;
+          guarantorMobileNumber = document.getElementById(
+            "guarantorMobileNumber"
+          ).value;
+          guarantorPanNumber =
+            document.getElementById("guarantorPanNumber").value;
+        } else {
+          guarantorName = null;
+          guarantorMobileNumber = null;
+          guarantorPanNumber = null;
+        }
+
+        let data = {
+          branchId: branchId,
+          clientId: clientId,
+          loanAmount: loanAmount,
+          loanPeriod: loanPeriod,
+          ageInYears: age,
+          lengthOfServiceInYears: lengthOfService,
+          employmentDetails: employmentDetails,
+          houseOwned: houseOwned,
+          numberOfDependants: numberOfDependents,
+          cibilScore: cibilScore,
+          guarantorAvailable: guarantorAvailable,
+          guarantorName: guarantorName,
+          guarantorMobileNumber: guarantorMobileNumber,
+          guarantorPanNumber: guarantorPanNumber,
+        };
+        console.log(data);
+
+        let response = await fetch("http://localhost:5550/banking/loan", {
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+
+        let resp = await response.json();
+        console.log(resp);
+        clientLoanDetailsId = resp.clientLoanDetailsId;
+
+
+        uploadDocumentsApiCall();
+      }
+
+      const uploadDocumentsApiCall = async ()=>{
+        const idProof = document.getElementById("idProof");
+        const addressProof = document.getElementById("addressProof");
+        const bankStatement = document.getElementById("bankStatement");        
+
+        const formData = new FormData();
+
+        formData.append("idProof",idProof.files[0]);
+        formData.append("addressProof",addressProof.files[0]);
+        formData.append("bankStatement",bankStatement.files[0]);
+        formData.append("clientLoanDetailsId",clientLoanDetailsId);
+        
+        const response = await fetch("http://localhost:5550/banking/loan/uploadDocuments", {
+          method: "POST",
+          body: formData,
+        }).catch(error=>{
+          console.log(error);
+        });
+        const datas = await response.json();
+        console.log(datas);
+        
+        if (datas.apiStatusSuccessful == true) {
+          document.getElementById("formDiv").style.display = "none";
+          document.getElementById("createdDiv").style.display = "block";
+        } else {
+          document.getElementById("formDiv").style.display = "none";
+          document.getElementById("errorDiv").style.display = "block";
+        }
+      }
+
+
+
+
+    </script>
+  </body>
+</html>
