@@ -1,0 +1,21 @@
+server:
+  port: 5050
+
+
+spring:
+  http:
+    multipart:
+      maxFileSize: 100Mb
+      maxRequestSize: 100Mb
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      ddl-auto: update
+    show-sql: 'true'
+  datasource:
+    url: jdbc:mysql://localhost:3306/elearningdb
+    username: root
+    password: root

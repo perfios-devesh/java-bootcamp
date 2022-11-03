@@ -1,0 +1,123 @@
+<nav
+  class="navbar navbar-expand-lg navbar-light"
+  style="margin: auto; margin-top: 10px; background-color: white"
+>
+  <div class="container-fluid">
+    <a
+      class="navbar-brand"
+      id="imageLink"
+      href="index.html"
+      style="margin: -15px; margin-top: -16px; margin-right: 10px"
+    >
+      <img
+        src="resources/logo.png"
+        alt="Perfios Bank"
+        width=""
+        height="63px"
+        class="d-inline-block align-text-top"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul
+        id="userNavBar"
+        class="navbar-nav me-auto mb-2 mb-lg-0"
+        style="display: none"
+      >
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard.html">Your Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="allCourses.html">All Courses</a>
+        </li>
+      </ul>
+      <ul
+        id="trainerNavBar"
+        class="navbar-nav me-auto mb-2 mb-lg-0"
+        style="display: none"
+      >
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard.html">Your Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="allCourses.html">All Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="addCourse.html">Add Course</a>
+        </li>
+      </ul>
+
+      <ul
+        id="logoutMenuNavBar"
+        class="navbar-nav"
+        style="display: none; float: right"
+      >
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbarDropdownMenuLink"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            User
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdownMenuLink"
+          >
+            <li>
+              <a class="dropdown-item" onclick="logoutUser();">Log Out</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  var name;
+  var userId;
+  var courseId;
+  var blobId;
+  var trainerId;
+  name = sessionStorage.getItem("name");
+  userId = sessionStorage.getItem("userId");
+  trainerId = sessionStorage.getItem("trainerId");
+  courseId = sessionStorage.getItem("courseId");
+  blobId = sessionStorage.getItem("blobId");
+
+  function logoutUser() {
+    sessionStorage.clear();
+    window.open("index.html", "_self");
+  }
+  window.addEventListener("load", setNavBarValues());
+
+  function setNavBarValues() {
+    if (sessionStorage.getItem("role") != null) {
+      document.getElementById("navbarDropdownMenuLink").innerHTML = name;
+      document.getElementById("logoutMenuNavBar").style.display = "flex";
+
+      if (trainerId != null) {
+        document.getElementById("trainerNavBar").style.display = "flex";
+      } else {
+        document.getElementById("userNavBar").style.display = "flex";
+      }
+
+      document
+        .getElementById("imageLink")
+        .setAttribute("href", "dashboard.html");
+    }
+  }
+</script>
