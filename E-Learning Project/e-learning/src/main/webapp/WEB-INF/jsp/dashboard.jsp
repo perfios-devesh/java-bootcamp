@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -54,7 +56,7 @@
       var blobId;
       var iter = 0;
       $(function () {
-        $("#nav-placeholder").load("nav.html");
+        $("#nav-placeholder").load("resources/nav.html");
 
         name = sessionStorage.getItem("name");
         userId = sessionStorage.getItem("userId");
@@ -95,16 +97,16 @@
         if (userId != null) {
           document
             .getElementById("dashboardLink")
-            .setAttribute("href", "adminDashboard.html");
+            .setAttribute("href", "adminDashboard");
         } else {
           document
             .getElementById("dashboardLink")
-            .setAttribute("href", "dashboard.html");
+            .setAttribute("href", "dashboard");
         }
 
         document
           .getElementById("imageLink")
-          .setAttribute("href", "dashboard.html");
+          .setAttribute("href", "dashboard");
       }
 
       function createTable(item) {
@@ -135,34 +137,34 @@
         var injectDiv = document.getElementById("inject");
 
         var card = document.createElement("div");
-        card.setAttribute("id", `course[${courseId}]`);
+        card.setAttribute("id", "course[" + courseId + "]");
         card.classList.add("card");
 
         var cardHeading = document.createElement("h5");
-        cardHeading.setAttribute("id", `courseName[${courseId}]`);
+        cardHeading.setAttribute("id", "courseName[" + courseId + "]");
         cardHeading.innerHTML = courseName + " (" + courseLevel + ")";
         cardHeading.classList.add("card-header");
 
         var cardBody = document.createElement("div");
-        cardBody.setAttribute("id", `courseBody[${courseId}]`);
+        cardBody.setAttribute("id", "courseBody[" + courseId + "]");
         cardBody.classList.add("card-body");
 
         var cardTitle = document.createElement("h5");
-        cardTitle.setAttribute("id", `courseTitle[${courseId}]`);
+        cardTitle.setAttribute("id", "courseTitle[" + courseId + "]");
         cardTitle.innerHTML = trainerName;
         cardTitle.classList.add("card-text");
 
         var cardText = document.createElement("p");
-        cardText.setAttribute("id", `courseDescription[${courseId}]`);
+        cardText.setAttribute("id", "courseDescription[" + courseId + "]");
         cardText.innerHTML = courseDescription;
         cardText.classList.add("card-text");
 
         var goToCourseBtn = document.createElement("button");
         goToCourseBtn.innerText = "Go To Course";
-        goToCourseBtn.setAttribute("id", `goToCourseBtn[${courseId}]`);
+        goToCourseBtn.setAttribute("id", "goToCourseBtn[" + courseId + "]");
         goToCourseBtn.classList.add("btn-success");
         goToCourseBtn.classList.add("btn");
-        goToCourseBtn.setAttribute("onclick", `goToCourse(${courseId})`);
+        goToCourseBtn.setAttribute("onclick", "goToCourse(" + courseId + ")");
 
         cardBody.appendChild(cardTitle);
         cardBody.appendChild(cardText);
@@ -177,7 +179,7 @@
 
       function goToCourse(courseId) {
         sessionStorage.setItem("courseId", courseId);
-        window.open("viewCourse.html", "_self");
+        window.open("viewCourse", "_self");
       }
     </script>
   </body>

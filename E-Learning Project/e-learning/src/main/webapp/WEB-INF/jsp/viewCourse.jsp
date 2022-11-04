@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%><!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -55,7 +56,7 @@
       const details = new Map();
       var currentBlobId = 0;
       $(function () {
-        $("#nav-placeholder").load("nav.html");
+        $("#nav-placeholder").load("resources/nav.html");
 
         name = sessionStorage.getItem("name");
         userId = sessionStorage.getItem("userId");
@@ -102,13 +103,13 @@
         card.classList.add("card");
 
         var cardHeader = document.createElement("div");
-        cardHeader.setAttribute("id", `courseHeader[${courseId}]`);
+        cardHeader.setAttribute("id", "courseHeader[" + courseId + "]");
         cardHeader.classList.add("card-header");
         cardHeader.style.height = "40px";
         cardHeader.style.textAlign = "left";
 
         var cardHeading = document.createElement("h5");
-        cardHeading.setAttribute("id", `courseName[${courseId}]`);
+        cardHeading.setAttribute("id", "courseName[" + courseId + "]");
         cardHeading.innerHTML = courseName + " (" + courseLevel + ")";
         cardHeading.style.float = "left";
         cardHeading.style.width = "80%";
@@ -122,7 +123,7 @@
           registerForCourseBtn.classList.add("btn");
           registerForCourseBtn.classList.add("btn-success");
           registerForCourseBtn.style.display = "inline-block";
-          registerForCourseBtn.setAttribute("onclick", `registerForCourse()`);
+          registerForCourseBtn.setAttribute("onclick", "registerForCourse()");
           registerForCourseBtn.style.width = "10%";
           registerForCourseBtn.style.float = "right";
           cardHeader.style.height = "55px";
@@ -136,7 +137,7 @@
           editCourseBtn.classList.add("btn");
           editCourseBtn.classList.add("btn-primary");
           editCourseBtn.style.display = "inline-block";
-          editCourseBtn.setAttribute("onclick", `editCourse()`);
+          editCourseBtn.setAttribute("onclick", "editCourse()");
           editCourseBtn.style.width = "10%";
           editCourseBtn.style.float = "right";
           cardHeader.style.height = "55px";
@@ -184,11 +185,11 @@
 
           value.forEach(function (blobDetails) {
             var card = document.createElement("div");
-            card.setAttribute("id", `blob[${blobDetails[0]}]`);
+            card.setAttribute("id", "blob[" + blobDetails[0] + "]");
             card.classList.add("card");
 
             var cardHeader = document.createElement("div");
-            cardHeader.setAttribute("id", `blobHeader[${blobDetails[0]}]`);
+            cardHeader.setAttribute("id", "blobHeader[" + blobDetails[0] + "]");
             cardHeader.classList.add("card-header");
             cardHeader.style.height = "40px";
 
@@ -200,7 +201,7 @@
             if (trainerId == courseTrainerId) {
               cardHeader.setAttribute(
                 "onclick",
-                `goToVideoPage(${blobDetails[0]})`
+                "goToVideoPage(" + blobDetails[0] + ")"
               );
               cardHeader.style.cursor = "pointer";
             }
@@ -214,7 +215,7 @@
               resumeButton.classList.add("btn-success");
               resumeButton.setAttribute(
                 "onclick",
-                `goToVideoPage(${blobDetails[0]})`
+                "goToVideoPage(" + blobDetails[0] + ")"
               );
               resumeButton.style.width = "10%";
               resumeButton.style.float = "right";
@@ -270,7 +271,7 @@
 
       function goToVideoPage(blobId) {
         sessionStorage.setItem("blobId", blobId);
-        window.open("viewVideo.html", "_self");
+        window.open("viewVideo", "_self");
       }
 
       async function registerForCourse() {
@@ -290,12 +291,12 @@
         let resp = await response.json();
         console.log(resp);
 
-        window.open("viewCourse.html", "_self");
+        window.open("viewCourse", "_self");
       }
 
       function editCourse() {
         sessionStorage.setItem("courseId", courseId);
-        window.open("editCourse.html", "_self");
+        window.open("editCourse", "_self");
       }
     </script>
   </body>

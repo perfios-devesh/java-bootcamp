@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -119,7 +121,7 @@
       var blobId;
       var iter = 0;
       $(function () {
-        $("#nav-placeholder").load("nav.html");
+        $("#nav-placeholder").load("resources/nav.html");
 
         name = sessionStorage.getItem("name");
         userId = sessionStorage.getItem("userId");
@@ -153,7 +155,7 @@
 
         if (resp.apiStatusSuccessful == true) {
           sessionStorage.setItem("courseId", resp.courseId);
-          window.open("addCourseBlobs.html", "_self");
+          window.open("addCourseBlobs", "_self");
         }
       }
 
@@ -165,16 +167,16 @@
         if (userId != null) {
           document
             .getElementById("dashboardLink")
-            .setAttribute("href", "adminDashboard.html");
+            .setAttribute("href", "adminDashboard");
         } else {
           document
             .getElementById("dashboardLink")
-            .setAttribute("href", "dashboard.html");
+            .setAttribute("href", "dashboard");
         }
 
         document
           .getElementById("imageLink")
-          .setAttribute("href", "dashboard.html");
+          .setAttribute("href", "dashboard");
       }
     </script>
   </body>

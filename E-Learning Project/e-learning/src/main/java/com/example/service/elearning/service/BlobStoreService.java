@@ -28,12 +28,12 @@ public class BlobStoreService {
     private final UsersRepository usersRepository;
 
     public BlobStore getBlob(Long id) {
-        return blobStoreRepository.getReferenceById(id);
+        return blobStoreRepository.getById(id);
     }
 
     public BlobStore saveBlob(BlobDTO blobDTO) throws IOException {
 
-        Course course = courseRepository.getReferenceById(blobDTO.getCourseId());
+        Course course = courseRepository.getById(blobDTO.getCourseId());
         course.setCourseDuration(course.getCourseDuration() + blobDTO.getItemDuration());
 
         Course course1 = courseRepository.saveAndFlush(course);
@@ -53,7 +53,7 @@ public class BlobStoreService {
     public CourseDetailsDTO getCourseDetails(Long courseId , Long userId) {
         CourseDetailsDTO courseDetailsDTO = new CourseDetailsDTO();
         try {
-            Course course = courseRepository.getReferenceById(courseId);
+            Course course = courseRepository.getById(courseId);
 
             courseDetailsDTO.setCourseName(course.getCourseName());
             courseDetailsDTO.setCourseDescription(course.getCourseDescription());
@@ -79,7 +79,7 @@ public class BlobStoreService {
             courseDetailsDTO.setBlobDTOS(blobDTOS);
 
             if(userId != null){
-                UserCourseDetails userCourseDetails = userCourseDetailsRepository.findByCourseAndUsers(course, usersRepository.getReferenceById(userId));
+                UserCourseDetails userCourseDetails = userCourseDetailsRepository.findByCourseAndUsers(course, usersRepository.getById(userId));
                 if (userCourseDetails != null) {
                     courseDetailsDTO.setCurrentBlobId(userCourseDetails.getCurrentBlobId());
                     courseDetailsDTO.setRegisteredOn(userCourseDetails.getRegisteredOn());
@@ -99,7 +99,7 @@ public class BlobStoreService {
     public CommonServiceResponse removeUnwantedBlobs(RemoveBlobsDTO removeBlobsDTO){
         CommonServiceResponse commonServiceResponse = new CommonServiceResponse();
         try{
-            List<BlobStore> blobStoreList = blobStoreRepository.findByCourse(courseRepository.getReferenceById(removeBlobsDTO.getCourseId()));
+            List<BlobStore> blobStoreList = blobStoreRepository.findByCourse(courseRepository.getById(removeBlobsDTO.getCourseId()));
             for(BlobStore blobStore : blobStoreList){
                 if( !removeBlobsDTO.getToKeepIds().contains(blobStore.getBlobId())){
                     blobStoreRepository.delete(blobStore);

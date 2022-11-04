@@ -1,8 +1,13 @@
 server:
   port: 5050
 
-
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
   http:
     multipart:
       maxFileSize: 100Mb

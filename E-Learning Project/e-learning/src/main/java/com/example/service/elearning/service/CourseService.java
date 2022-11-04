@@ -22,7 +22,7 @@ public class CourseService {
     public AddCourseResponse addCourse(CourseDTO courseDTO) {
         AddCourseResponse addCourseResponse = new AddCourseResponse();
         try {
-            Trainer trainer = trainerRepository.getReferenceById(courseDTO.getTrainerId());
+            Trainer trainer = trainerRepository.getById(courseDTO.getTrainerId());
             Course course = new Course();
             course.setCourseDuration(0l);
             course.setCourseName(courseDTO.getCourseName());
@@ -57,7 +57,7 @@ public class CourseService {
             if (trainerId == null) {
                 courseList = courseRepository.findAll();
             } else {
-                courseList = courseRepository.findByTrainer(trainerRepository.getReferenceById(trainerId));
+                courseList = courseRepository.findByTrainer(trainerRepository.getById(trainerId));
             }
 
             List<CourseDTO> courseDTOS = new ArrayList<>();

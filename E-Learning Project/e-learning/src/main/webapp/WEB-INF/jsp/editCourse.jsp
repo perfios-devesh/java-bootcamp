@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%><!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -87,7 +88,7 @@
       blobsInSectionIter.push(0); //so that section iter matches the push in array
       var iter = 0;
       $(function () {
-        $("#nav-placeholder").load("nav.html");
+        $("#nav-placeholder").load("resources/nav.html");
 
         name = sessionStorage.getItem("name");
         userId = sessionStorage.getItem("userId");
@@ -149,11 +150,11 @@
         );
 
         var sectionBody = document.getElementById(
-          `sectionBody[${sectionDivId}]`
+          "sectionBody[" + sectionDivId+ "]"
         );
 
         var blobDiv = document.createElement("div");
-        blobDiv.setAttribute("id", `blob[${sectionDivId}][${blobDivId}]`);
+        blobDiv.setAttribute("id", "blob[" + sectionDivId + "][" + blobDivId + "]");
         blobDiv.classList.add("card");
 
         var blobHeadingDiv = document.createElement("div");
@@ -163,7 +164,7 @@
         var blobHeadingLabel = document.createElement("label");
         blobHeadingLabel.setAttribute(
           "for",
-          `blobHeading[${sectionDivId}][${blobDivId}]`
+          "blobHeading[" + sectionDivId + "][" + blobDivId + "]"
         );
         blobHeadingLabel.innerHTML = "Video Name:  ";
         blobHeadingLabel.style.color = "black";
@@ -173,7 +174,7 @@
         var blobHeading = document.createElement("input");
         blobHeading.setAttribute(
           "id",
-          `blobHeading[${sectionDivId}][${blobDivId}]`
+          "blobHeading[" + sectionDivId + "][" + blobDivId + "]"
         );
         blobHeading.style.width = "40%";
         blobHeading.style.display = "inline-block";
@@ -192,7 +193,7 @@
         );
         removeThisBlobBtn.setAttribute(
           "onclick",
-          `removeBlob(${sectionDivId} , ${blobDivId})`
+          "removeBlob(" + sectionDivId + "," + blobDivId+ ")"
         );
 
         blobHeadingDiv.appendChild(blobHeadingLabel);
@@ -201,7 +202,7 @@
 
         var blobBody = document.createElement("div");
         blobBody.classList.add("card-body");
-        blobBody.setAttribute("id", `blobBody[${sectionDivId}][${blobDivId}]`);
+        blobBody.setAttribute("id", "blobBody[" + sectionDivId + "][" + blobDivId + "]");
 
         var videoScreen = document.createElement("video");
         videoScreen.setAttribute("width", "300px");
@@ -214,7 +215,7 @@
         alreadyStoredBlobId.innerHTML = blobId;
         alreadyStoredBlobId.setAttribute(
           "id",
-          `blobId[${sectionDivId}][${blobDivId}]`
+          "blobId[" + sectionDivId + "][" + blobDivId + "]"
         );
 
         blobBody.appendChild(videoScreen);
@@ -260,16 +261,16 @@
         if (userId != null) {
           document
             .getElementById("dashboardLink")
-            .setAttribute("href", "adminDashboard.html");
+            .setAttribute("href", "adminDashboard");
         } else {
           document
             .getElementById("dashboardLink")
-            .setAttribute("href", "dashboard.html");
+            .setAttribute("href", "dashboard");
         }
 
         document
           .getElementById("imageLink")
-          .setAttribute("href", "dashboard.html");
+          .setAttribute("href", "dashboard");
       }
 
       function addAlreadyPresentSectionDiv(sectionNameValue) {
@@ -278,7 +279,7 @@
         var injectDiv = document.getElementById("inject");
 
         var sectionDiv = document.createElement("div");
-        sectionDiv.setAttribute("id", `section[${sectionIter}]`);
+        sectionDiv.setAttribute("id", "section[" + sectionIter + "]");
         sectionDiv.classList.add("card");
 
         var sectionNameDiv = document.createElement("div");
@@ -286,14 +287,14 @@
         sectionNameDiv.style.height = "55px";
 
         var sectionNameLabel = document.createElement("label");
-        sectionNameLabel.setAttribute("for", `sectionName[${sectionIter}]`);
+        sectionNameLabel.setAttribute("for", "sectionName[" + sectionIter + "]");
         sectionNameLabel.innerHTML = "Section Name:  ";
         sectionNameLabel.style.color = "black";
         sectionNameLabel.style.float = "left";
         sectionNameLabel.classList.add("form-label");
 
         var sectionName = document.createElement("input");
-        sectionName.setAttribute("id", `sectionName[${sectionIter}]`);
+        sectionName.setAttribute("id", "sectionName[" + sectionIter + "]");
         sectionName.style.width = "40%";
         sectionName.style.display = "inline-block";
         sectionName.style.marginLeft = "1%";
@@ -308,7 +309,7 @@
         addBlobBtn.setAttribute("style", "display: inline-block; float:right;");
         addBlobBtn.setAttribute(
           "onclick",
-          `addBlobInSectionIntermediate(${sectionIter})`
+          "addBlobInSectionIntermediate(" + sectionIter + ")"
         );
 
         sectionNameDiv.appendChild(sectionNameLabel);
@@ -317,7 +318,7 @@
 
         var sectionBody = document.createElement("div");
         sectionBody.classList.add("card-body");
-        sectionBody.setAttribute("id", `sectionBody[${sectionIter}]`);
+        sectionBody.setAttribute("id", "sectionBody[" + sectionIter + "]");
 
         blobsInSectionIter.push(0);
         blobDivId = blobsInSectionIter[sectionIter];
@@ -336,7 +337,7 @@
         var injectDiv = document.getElementById("inject");
 
         var sectionDiv = document.createElement("div");
-        sectionDiv.setAttribute("id", `section[${sectionIter}]`);
+        sectionDiv.setAttribute("id", "section[" + sectionIter + "]");
         sectionDiv.classList.add("card");
 
         var sectionNameDiv = document.createElement("div");
@@ -344,14 +345,14 @@
         sectionNameDiv.style.height = "55px";
 
         var sectionNameLabel = document.createElement("label");
-        sectionNameLabel.setAttribute("for", `sectionName[${sectionIter}]`);
+        sectionNameLabel.setAttribute("for", "sectionName[" + sectionIter + "]");
         sectionNameLabel.innerHTML = "Section Name:  ";
         sectionNameLabel.style.color = "black";
         sectionNameLabel.style.float = "left";
         sectionNameLabel.classList.add("form-label");
 
         var sectionName = document.createElement("input");
-        sectionName.setAttribute("id", `sectionName[${sectionIter}]`);
+        sectionName.setAttribute("id", "sectionName[" + sectionIter + "]");
         sectionName.style.width = "40%";
         sectionName.style.display = "inline-block";
         sectionName.style.marginLeft = "1%";
@@ -365,7 +366,7 @@
         addBlobBtn.setAttribute("style", "display: inline-block; float:right;");
         addBlobBtn.setAttribute(
           "onclick",
-          `addBlobInSectionIntermediate(${sectionIter})`
+          "addBlobInSectionIntermediate(" + sectionIter + ")"
         );
 
         sectionNameDiv.appendChild(sectionNameLabel);
@@ -374,7 +375,7 @@
 
         var sectionBody = document.createElement("div");
         sectionBody.classList.add("card-body");
-        sectionBody.setAttribute("id", `sectionBody[${sectionIter}]`);
+        sectionBody.setAttribute("id", "sectionBody[" + sectionIter + "]");
 
         blobsInSectionIter.push(1);
         blobDivId = blobsInSectionIter[sectionIter];
@@ -400,11 +401,11 @@
 
       function addBlobInSection(sectionDivId, blobDivId) {
         var sectionBody = document.getElementById(
-          `sectionBody[${sectionDivId}]`
+          "sectionBody[" + sectionDivId+ "]"
         );
 
         var blobDiv = document.createElement("div");
-        blobDiv.setAttribute("id", `blob[${sectionDivId}][${blobDivId}]`);
+        blobDiv.setAttribute("id", "blob[" + sectionDivId + "][" + blobDivId + "]");
         blobDiv.classList.add("card");
 
         var blobHeadingDiv = document.createElement("div");
@@ -414,7 +415,7 @@
         var blobHeadingLabel = document.createElement("label");
         blobHeadingLabel.setAttribute(
           "for",
-          `blobHeading[${sectionDivId}][${blobDivId}]`
+          "blobHeading[" + sectionDivId + "][" + blobDivId + "]"
         );
         blobHeadingLabel.innerHTML = "Video Name:  ";
         blobHeadingLabel.style.color = "black";
@@ -423,7 +424,7 @@
         var blobHeading = document.createElement("input");
         blobHeading.setAttribute(
           "id",
-          `blobHeading[${sectionDivId}][${blobDivId}]`
+          "blobHeading[" + sectionDivId + "][" + blobDivId + "]"
         );
         blobHeading.style.width = "40%";
         blobHeading.style.display = "inline-block";
@@ -435,12 +436,12 @@
 
         var blobBody = document.createElement("div");
         blobBody.classList.add("card-body");
-        blobBody.setAttribute("id", `blobBody[${sectionDivId}][${blobDivId}]`);
+        blobBody.setAttribute("id", "blobBody[" + sectionDivId + "][" + blobDivId + "]");
 
         var blobFileLabel = document.createElement("label");
         blobFileLabel.setAttribute(
           "for",
-          `blobFile[${sectionDivId}][${blobDivId}]`
+          "blobFile[" + sectionDivId + "][" + blobDivId + "]"
         );
         blobFileLabel.innerHTML = "Video File:  ";
         blobFileLabel.style.color = "black";
@@ -453,7 +454,7 @@
         var blobFile = document.createElement("input");
         blobFile.setAttribute("type", "file");
         blobFile.setAttribute("accept", "video/mp4,video/x-m4v,video/*");
-        blobFile.setAttribute("id", `blobFile[${sectionDivId}][${blobDivId}]`);
+        blobFile.setAttribute("id", "blobFile[" + sectionDivId + "][" + blobDivId + "]");
         blobFile.style.width = "40%";
         blobFile.style.display = "inline-block";
         blobFile.style.marginLeft = "1%";
@@ -471,7 +472,7 @@
           durationValue = Math.round(e.currentTarget.duration);
           console.log(durationValue);
           document.getElementById(
-            `blobDuration[${sectionDivId}][${blobDivId}]`
+            "blobDuration[" + sectionDivId + "][" + blobDivId + "]"
           ).value = durationValue;
           URL.revokeObjectURL(obUrl);
         });
@@ -488,7 +489,7 @@
         var blobDurationLabel = document.createElement("label");
         blobDurationLabel.setAttribute(
           "for",
-          `blobDuration[${sectionDivId}][${blobDivId}]`
+          "blobDuration[" + sectionDivId + "][" + blobDivId + "]"
         );
         blobDurationLabel.innerHTML = "Video Length in Seconds:  ";
         blobDurationLabel.style.color = "black";
@@ -498,7 +499,7 @@
         blobDuration.setAttribute("type", "number");
         blobDuration.setAttribute(
           "id",
-          `blobDuration[${sectionDivId}][${blobDivId}]`
+          "blobDuration[" + sectionDivId + "][" + blobDivId + "]"
         );
         blobDuration.style.width = "31.5%";
         blobDuration.style.display = "inline-block";
@@ -536,17 +537,17 @@
 
       function uploadBlob(sectionDivId, blobDivId) {
         if (
-          document.getElementById(`blob[${sectionDivId}][${blobDivId}]`) != null
+          document.getElementById("blob[" + sectionDivId + "][" + blobDivId + "]") != null
         ) {
           if (
             document.getElementById(
-              `blobFile[${sectionDivId}][${blobDivId}]`
+              "blobFile[" + sectionDivId + "][" + blobDivId + "]"
             ) != null
           ) {
             uploadBlobApiCall(sectionDivId, blobDivId);
           } else {
             toKeepIds.push(
-              document.getElementById(`blobId[${sectionDivId}][${blobDivId}]`)
+              document.getElementById("blobId[" + sectionDivId + "][" + blobDivId + "]")
                 .innerHTML
             );
           }
@@ -557,24 +558,24 @@
         var formData = new FormData();
         formData.append(
           "file",
-          document.getElementById(`blobFile[${sectionDivId}][${blobDivId}]`)
+          document.getElementById("blobFile[" + sectionDivId + "][" + blobDivId + "]")
             .files[0]
         );
         formData.append("blobType", "video/mp4");
         formData.append("courseId", courseId);
         formData.append(
           "section",
-          document.getElementById(`sectionName[${sectionDivId}]`).value
+          document.getElementById("sectionName[" + sectionDivId+ "]").value
         );
         formData.append(
           "itemDuration",
-          document.getElementById(`blobDuration[${sectionDivId}][${blobDivId}]`)
+          document.getElementById("blobDuration[" + sectionDivId + "][" + blobDivId + "]")
             .value
         );
         formData.append("itemType", "video/mp4");
         formData.append(
           "itemHeading",
-          document.getElementById(`blobHeading[${sectionDivId}][${blobDivId}]`)
+          document.getElementById("blobHeading[" + sectionDivId + "][" + blobDivId + "]")
             .value
         );
 
@@ -594,19 +595,19 @@
         if (resp.apiStatusSuccessful == true) {
           toKeepIds.push(resp.blobId);
           document.getElementById(
-            `sectionName[${sectionDivId}]`
+            "sectionName[" + sectionDivId+ "]"
           ).readOnly = true;
           document.getElementById(
-            `blobHeading[${sectionDivId}][${blobDivId}]`
+            "blobHeading[" + sectionDivId + "][" + blobDivId + "]"
           ).readOnly = true;
           document.getElementById(
-            `blobFile[${sectionDivId}][${blobDivId}]`
+            "blobFile[" + sectionDivId + "][" + blobDivId + "]"
           ).readOnly = true;
           document.getElementById(
-            `blobDuration[${sectionDivId}][${blobDivId}]`
+            "blobDuration[" + sectionDivId + "][" + blobDivId + "]"
           ).readOnly = true;
           document
-            .getElementById(`uploadAllBtn`)
+            .getElementById("uploadAllBtn")
             .setAttribute("disabled", "disabled");
         }
       }
@@ -630,13 +631,13 @@
 
         if (resp.apiStatusSuccessful == true) {
           sessionStorage.setItem("courseId", courseId);
-          window.open("viewCourse.html", "_self");
+          window.open("viewCourse", "_self");
         }
       }
 
       function removeBlob(sectionDivId, blobDivId) {
         console.log(sectionDivId + " " + blobDivId);
-        document.getElementById(`blob[${sectionDivId}][${blobDivId}]`).remove();
+        document.getElementById("blob[" + sectionDivId + "][" + blobDivId + "]").remove();
       }
     </script>
   </body>

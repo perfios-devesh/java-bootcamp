@@ -61,7 +61,7 @@ public class UsersService {
     public AllCoursesDTO getCoursesByUser(Long userId) {
         AllCoursesDTO allCoursesDTO = new AllCoursesDTO();
         try {
-            List<UserCourseDetails> userCourseDetailsList = usersRepository.getReferenceById(userId).getUserCourseDetails();
+            List<UserCourseDetails> userCourseDetailsList = usersRepository.getById(userId).getUserCourseDetails();
             List<Course> courseList = new ArrayList<>();
             for(UserCourseDetails userCourseDetails : userCourseDetailsList){
                 courseList.add(userCourseDetails.getCourse());
@@ -99,9 +99,9 @@ public class UsersService {
 
         try {
             UserCourseDetails userCourseDetails = new UserCourseDetails();
-            Course course = courseRepository.getReferenceById(registerCourseDTO.getCourseId());
+            Course course = courseRepository.getById(registerCourseDTO.getCourseId());
             userCourseDetails.setCourse(course);
-            userCourseDetails.setUsers(usersRepository.getReferenceById(registerCourseDTO.getUserId()));
+            userCourseDetails.setUsers(usersRepository.getById(registerCourseDTO.getUserId()));
             userCourseDetails.setRegisteredOn(LocalDateTime.now());
             userCourseDetails.setCurrentBlobId(course.getBlobStores().get(0).getBlobId());
             userCourseDetails.setPercentageCompleted(0.0);

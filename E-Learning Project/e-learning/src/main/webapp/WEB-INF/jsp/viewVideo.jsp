@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%><!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -75,7 +76,7 @@
       const videoScreen = document.getElementById("video-screen");
       var currentBlobId = 0;
       $(function () {
-        $("#nav-placeholder").load("nav.html");
+        $("#nav-placeholder").load("resources/nav.html");
 
         name = sessionStorage.getItem("name");
         userId = sessionStorage.getItem("userId");
@@ -123,11 +124,11 @@
         card.classList.add("card");
 
         var cardHeader = document.createElement("div");
-        cardHeader.setAttribute("id", `course[${courseId}]`);
+        cardHeader.setAttribute("id", "course[" + courseId + "]");
         cardHeader.classList.add("card-header");
 
         var cardHeading = document.createElement("h5");
-        cardHeading.setAttribute("id", `courseName[${courseId}]`);
+        cardHeading.setAttribute("id", "courseName[" + courseId + "]");
         cardHeading.innerHTML = courseName + " (" + courseLevel + ")";
         cardHeading.style.width = "80%";
         cardHeading.style.float = "left";
@@ -135,7 +136,7 @@
 
         if (trainerId == null) {
           var cardPercentage = document.createElement("h5");
-          cardPercentage.setAttribute("id", `coursePercentage[${courseId}]`);
+          cardPercentage.setAttribute("id", "coursePercentage[" + courseId + "]");
           cardPercentage.innerHTML = "Completed: " + percentageCompleted + "%";
           cardPercentage.style.width = "12%";
           cardPercentage.style.float = "right";
@@ -183,18 +184,18 @@
 
           value.forEach(function (blobDetails) {
             var card = document.createElement("div");
-            card.setAttribute("id", `blob[${blobDetails[0]}]`);
+            card.setAttribute("id", "blob[" + blobDetails[0] + "]");
             card.classList.add("card");
 
             var cardHeader = document.createElement("div");
-            cardHeader.setAttribute("id", `blobHeader[${blobDetails[0]}]`);
+            cardHeader.setAttribute("id", "blobHeader[" + blobDetails[0] + "]");
             cardHeader.classList.add("card-header");
             cardHeader.style.height = "40px";
-            cardHeader.setAttribute("onclick", `showVideo(${blobDetails[0]})`);
+            cardHeader.setAttribute("onclick", "showVideo(" + blobDetails[0] + ")");
             cardHeader.style.cursor = "pointer";
 
             var cardHeading = document.createElement("p");
-            cardHeader.setAttribute("id", `blobHeading[${blobDetails[0]}]`);
+            cardHeader.setAttribute("id", "blobHeading[" + blobDetails[0] + "]");
             cardHeading.style.width = "80%";
             cardHeading.style.float = "left";
             cardHeading.innerHTML = blobDetails[1];
@@ -212,7 +213,7 @@
         });
 
         document.getElementById("videoName").innerHTML =
-          document.getElementById(`blobHeading[${blobId}]`).innerHTML;
+          document.getElementById("blobHeading[" + blobId + "]").innerHTML;
       }
 
       function setNavBarValues() {
@@ -223,16 +224,16 @@
         if (userId != null) {
           document
             .getElementById("dashboardLink")
-            .setAttribute("href", "adminDashboard.html");
+            .setAttribute("href", "adminDashboard");
         } else {
           document
             .getElementById("dashboardLink")
-            .setAttribute("href", "dashboard.html");
+            .setAttribute("href", "dashboard");
         }
 
         document
           .getElementById("imageLink")
-          .setAttribute("href", "dashboard.html");
+          .setAttribute("href", "dashboard");
       }
 
       function createSectionDetailsArray(item) {
@@ -267,7 +268,7 @@
 
       function showVideo(blobId) {
         document.getElementById("videoName").innerHTML =
-          document.getElementById(`blobHeading[${blobId}]`).innerHTML;
+          document.getElementById("blobHeading[" + blobId + "]").innerHTML;
         videoScreen.src = "http://localhost:5050/elearning/blob/" + blobId;
       }
     </script>

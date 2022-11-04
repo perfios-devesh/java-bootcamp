@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -166,7 +168,7 @@
               <div class="row justify-content-center">
                 <div class="col-8" style="text-align: center; margin-top: 15px">
                   <a
-                    href="index.html"
+                    href="index"
                     style="color: white; text-decoration: underline"
                     >Already Registered. Sign In here.</a
                   >
@@ -183,7 +185,7 @@
               </h3>
               <br />
               <button
-                onclick="window.open('index.html', '_self');"
+                onclick="window.open('index', '_self');"
                 class="btn btn-primary"
               >
                 Sign in
@@ -201,7 +203,7 @@
       var blobId;
       var trainerId;
       $(function () {
-        $("#nav-placeholder").load("nav.html");
+        $("#nav-placeholder").load("resources/nav.html");
       });
 
       function matchPassword() {

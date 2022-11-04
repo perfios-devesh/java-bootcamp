@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Perfios Bank</title>
+    <title>E-Learning</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -35,7 +37,7 @@
           "
         >
           <div style="margin-top: 100px">
-            <h2>Personal Banking Sign In</h2>
+            <h2>Sign In</h2>
             <h5 id="loginMessage" style="display: none; color: red"></h5>
             <form>
               <div class="mb-3">
@@ -62,7 +64,7 @@
 
               <div>
                 <a
-                  href="register.html"
+                  href="register"
                   style="float: left; color: white; text-decoration: underline"
                   >Register</a
                 >
@@ -134,7 +136,7 @@
       var username;
       var password;
       $(function () {
-        $("#nav-placeholder").load("nav.html");
+        $("#nav-placeholder").load("resources/nav.html");
       });
 
       async function loginApiCall() {
@@ -166,7 +168,7 @@
           sessionStorage.setItem("name", resp.name);
           sessionStorage.setItem("role", resp.role);
 
-          window.open("dashboard.html", "_self");
+          window.open("dashboard", "_self");
         } else {
           document.getElementById("loginMessage").innerHTML = resp.errorMessage;
           document.getElementById("loginMessage").style.display =
